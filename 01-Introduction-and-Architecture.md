@@ -41,14 +41,29 @@ The curriculum is organized into 14 key chapters:
 ---
 
 
-## Lecture 2: What is a Database & DBMS?
-*   **Database**: A structured collection of logically related data, representing some aspect of the real world (sometimes called a miniworld or Universe of Discourse).
-*   **DBMS (Database Management System)**: A computerized software system that enables users to create, maintain, query, and manage a database.
-*   **Core Tasks**:
-    1.  **Define**: Specifying data types, structures, and constraints.
-    2.  **Construct**: Storing the data on a physical storage medium.
-    3.  **Manipulate**: Querying, updating, and generating reports.
-    4.  **Control**: Restricting unauthorized access and concurrency.
+## Lecture 2: Introduction to Database & DBMS
+
+### 1. Definition of DBMS
+*   **Core Definition**: A Database Management System (DBMS) is a collection of interrelated data and a set of programs to access (retrieve) those data.
+*   **Interrelated Data**: Data is stored in structured formats (such as tables with rows and columns) where the data in a particular row is logically connected to a specific item or real-world entity.
+*   **Storage and Access**: A DBMS is not just for storing data permanently—it provides a set of programs to retrieve or fetch that data conveniently and efficiently (e.g., retrieving account details instantly at an ATM machine).
+
+### 2. Key Features and Goals of DBMS
+*   **Convenience and Efficiency**: DBMS provides convenient and efficient ways to store and retrieve data compared to traditional file systems.
+*   **Handling Large Volumes of Data**: It is designed to manage massive amounts of data for organizations while keeping track of all changes and concurrent transactions.
+*   **Data Storage Structures**: Defines simple or complex data structures capable of handling various types of data, including multimedia (audio, video, animations).
+*   **Data Manipulation**: Provides mechanisms to insert, update, or edit data accurately (e.g., updating a phone number or address).
+*   **Safety and Security**: Protects sensitive data from unauthorized access, security threats, or system failures.
+
+### 3. Difference Between Data and Information
+*   **Data (Raw Facts)**: Unprocessed facts or raw information with no context.
+    *   *Example*: `25, Raghav, Nagpur` (without context, these are just strings and numbers).
+*   **Information (Processed Data)**: Data that has been processed, structured, and organized to give a meaningful context.
+    *   *Example*: `"Raghav is 25 years old and resides in Nagpur."`
+
+### 4. What is Metadata?
+*   **Definition**: Metadata is data about data.
+*   **Example**: For a document or media file stored on a system, the metadata includes the author's name, creation date, last modified date, and file size. For a database, it includes table definitions, data types, and primary key constraints.
 
 ---
 
