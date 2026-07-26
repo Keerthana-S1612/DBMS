@@ -82,10 +82,9 @@ The curriculum is organized into 14 key chapters:
 
 ---
 
-## Lecture 4: Traditional File System vs. DBMS
-*   **File System**: Data is stored in individual flat files (e.g., `.txt`, `.csv`) managed directly by the operating system. Each program is written with hard-coded file formats, meaning the application logic and data structure are tightly coupled.
-*   **DBMS**: Data is stored centrally. The data definition (metadata) is stored in a catalog (data dictionary) separated from application code, creating an abstraction layer.
+## Lecture 4: Key Drawbacks of File Systems vs. DBMS
 
+### 1. File System vs. DBMS Comparison Table
 | Feature | Traditional File System | DBMS |
 | :--- | :--- | :--- |
 | **Data Structure** | Tightly coupled with the application program. | Stored independently in a system catalog. |
@@ -93,10 +92,7 @@ The curriculum is organized into 14 key chapters:
 | **Concurrency** | Difficult to lock specific records; files are locked. | Granular locks (row/page/table level) via transactions. |
 | **Security** | Coarse-grained OS-level file permissions. | Fine-grained roles, views, and row-level access control. |
 
----
-
-## Lecture 5: Key Drawbacks of File Systems vs. DBMS
-
+### 2. Seven Key Drawbacks of File Systems
 1.  **Data Redundancy and Inconsistency**:
     *   **Redundancy**: Different programmers and applications create duplicate files, which increases storage costs and makes searching and accessing data more difficult.
     *   **Inconsistency**: Updating a record in one file or location does not automatically update it elsewhere. This leads to conflicting data across files. A DBMS handles this seamlessly by propagating updates.
@@ -121,7 +117,7 @@ The curriculum is organized into 14 key chapters:
 
 ---
 
-## Lecture 6: Key Characteristics of DBMS
+## Lecture 5: Key Characteristics of DBMS
 *   **Self-Describing Database System**: The database contains both the actual database records and a catalog defining the structure of all files, data types, and constraints.
 *   **Insulation Between Programs and Data (Program-Data Independence)**: The structure of data files is stored in the DBMS catalog separately from the application programs. Changes to the physical structure of a file do not require rewriting the applications.
 *   **Data Abstraction**: The DBMS provides a conceptual representation of data to users, hiding physical storage details (like block layouts or index paths).
@@ -130,7 +126,7 @@ The curriculum is organized into 14 key chapters:
 
 ---
 
-## Lecture 7: Database Users & Database Administrator (DBA)
+## Lecture 6: Database Users & Database Administrator (DBA)
 1.  **Database Administrator (DBA)**: Responsible for authorizing access, monitoring usage, tuning performance, schema creation, and coordinate backing up/recovering databases.
 2.  **Naive / Parametric Users**: Interact with the system through pre-written application interfaces (e.g., bank tellers, airline reservation clerks, e-commerce customers).
 3.  **Sophisticated Users**: Engineers, analysts, or scientists who write complex database queries directly in SQL to perform custom reporting and data mining.
@@ -138,7 +134,7 @@ The curriculum is organized into 14 key chapters:
 
 ---
 
-## Lecture 8: Database Languages (DDL, DML, DCL, TCL)
+## Lecture 7: Database Languages (DDL, DML, DCL, TCL)
 *   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
     *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
 *   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
@@ -149,7 +145,7 @@ The curriculum is organized into 14 key chapters:
 
 ---
 
-## Lecture 9: Three-Schema Architecture (Levels of Abstraction)
+## Lecture 8: Three-Schema Architecture (Levels of Abstraction)
 This architecture separates the user application interfaces from the physical database files to ensure data independence.
 
 ```mermaid
@@ -168,19 +164,19 @@ graph TD
 
 ---
 
-## Lecture 10: Physical Data Independence
+## Lecture 9: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 11: Logical Data Independence
+## Lecture 10: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 12: Schema Mappings
+## Lecture 11: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -188,13 +184,13 @@ graph TD
 
 ---
 
-## Lecture 13: Database Architectures Overview
+## Lecture 12: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 14: 2-Tier Architecture
+## Lecture 13: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -209,7 +205,7 @@ graph LR
 
 ---
 
-## Lecture 15: 3-Tier Architecture
+## Lecture 14: 3-Tier Architecture
 *   **Concept**: An intermediate layer called the **Application Server** or **Web Server** is introduced between the Client and the Database Server.
 
 ```mermaid
@@ -226,7 +222,7 @@ graph LR
 
 ---
 
-## Lecture 16: Classification of DBMS
+## Lecture 15: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
