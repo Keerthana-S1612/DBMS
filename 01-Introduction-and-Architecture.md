@@ -245,11 +245,55 @@ Database schemas are mapped onto the 3-level database abstraction architecture:
 
 ---
 
-## Lecture 8: Database Users & Database Administrator (DBA)
-1.  **Database Administrator (DBA)**: Responsible for authorizing access, monitoring usage, tuning performance, schema creation, and coordinate backing up/recovering databases.
-2.  **Naive / Parametric Users**: Interact with the system through pre-written application interfaces (e.g., bank tellers, airline reservation clerks, e-commerce customers).
-3.  **Sophisticated Users**: Engineers, analysts, or scientists who write complex database queries directly in SQL to perform custom reporting and data mining.
-4.  **Application Programmers**: Software developers who write programs (e.g., in Java, Python, C#) that execute database transactions.
+## Lecture 8: Database Users
+
+### 1. Overview of Database Users
+The users of a Database Management System (DBMS) are categorized into 4 primary types based on their technical background, how they interact with the system, and their level of expertise:
+*   Naive Users (Unsophisticated Users)
+*   Application Programmers
+*   Sophisticated Users
+*   Specialized Users
+*(Note: The Database Administrator or DBA is a fifth key role with complete administrative privileges over the entire system).*
+
+### 2. Naive Users (Unsophisticated Users)
+*   **Definition**: Users who lack database knowledge and have no understanding of the technical details or inner workings of a DBMS. However, they interact with the database system frequently.
+*   **How They Interact**:
+    *   They do not write SQL queries or write code.
+    *   They interact with the system purely by invoking pre-written application programs via graphical user interfaces (Web apps, Mobile apps, Desktop interfaces).
+*   **Examples**:
+    *   **Bank Clerks / Tellers**: Enter customer account details or check balances using pre-built software interfaces.
+    *   **ATM Users**: Withdraw money or check account balances via a touchscreen interface without needing to know SQL.
+    *   **Online Ticket Booking**: Booking train, flight, or movie tickets through mobile apps or websites.
+
+### 3. Application Programmers
+*   **Definition**: Computer professionals and software developers who specialize in writing software applications.
+*   **Role & Responsibilities**:
+    *   Write the application code, business logic, and user interfaces that Naive Users interact with.
+    *   Use programming languages (e.g., Java, C++, Python) combined with database connectivity tools (e.g., JDBC, ODBC).
+    *   Build user-friendly interfaces (Web/Mobile UI).
+*   **Tools Used**:
+    *   Rapid Application Development (RAD) tools to speed up interface and software creation.
+
+### 4. Sophisticated Users
+*   **Definition**: Tech-savvy users who understand database structure and interact with the DBMS without writing standard application programs.
+*   **How They Interact**:
+    *   Formulate requests using database query languages (such as SQL) directly through command-line interfaces or query processors.
+    *   Use data analysis software to evaluate and analyze large datasets stored in the database.
+*   **Examples**:
+    *   **Data Analysts & Business Analysts**: Perform analytical queries to draw insights for business decisions.
+    *   **Database Administrators (DBAs)**: Execute queries directly to maintain and structure the database.
+
+### 5. Specialized Users
+*   **Definition**: Users with specialized technical skill sets who write non-traditional database applications that don't fit into the conventional relational model.
+*   **Key Domains & Applications**:
+    *   **Computer-Aided Design (CAD) Systems**: Managing complex engineering and 3D design databases.
+    *   **Knowledge Base & Expert Systems**: Working with artificial intelligence systems to store rules and inference mechanisms.
+    *   **Multimedia Databases**: Handling non-textual data like audio, video, graphics, images, and animations.
+    *   **Next-Generation Systems**: Developing future-ready database solutions for complex environment deployments.
+
+### 6. Summary & Preview: Database Administrator (DBA)
+*   **Overview**: The Database Administrator (DBA) is the most crucial administrative user who possesses administrative privileges over the entire database system.
+*   **Responsibilities**: Complete authority over data access, schema definition, security, and administrative management.
 
 ---
 
