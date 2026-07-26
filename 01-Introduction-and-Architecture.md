@@ -153,7 +153,30 @@ graph LR
 
 ---
 
-## Lecture 6: Key Characteristics of DBMS
+## Lecture 6: Data Abstraction & Three Levels of Abstraction
+
+### 1. Data Abstraction & Real-World Analogy
+*   **Concept**: Data abstraction refers to hiding complex system details from users and showing only the relevant, essential information.
+*   **Milk Vendor Analogy**: When asking a milk delivery agent for the reason behind a delay, you only want a quick, clear explanation (e.g., "the alarm didn't go off") rather than a long, unnecessary recount of their entire morning schedule. Similarly, database systems hide internal storage complexities from end-users.
+
+### 2. The Three Levels of Abstraction
+*   **A. Physical Level (Lowest Level)**:
+    *   **Description**: The bottom-most level that describes how the data are actually stored in physical storage media (e.g., HDDs, SSDs).
+    *   **Details**: Uses complex, low-level data structures to manage physical storage (such as managing raw files and multimedia formats).
+*   **B. Logical Level (Middle Level)**:
+    *   **Description**: The middle level that describes what data are stored in the database and what relationships exist among them.
+    *   **Details**: Uses relatively simpler data structures compared to the physical level. Managed primarily by Database Administrators (DBAs).
+    *   **Physical Data Independence**: The logical layer is independent of the physical layer, meaning changes made to the logical structure do not require rewriting the underlying physical storage structures.
+*   **C. View Level (Highest Level)**:
+    *   **Description**: The topmost level that describes only a part of the entire database relevant to a specific user or role.
+    *   **Details**:
+        *   Provides simplified interactions via web browsers, mobile apps, or Graphical User Interfaces (GUIs).
+        *   Hides complex logical rules and physical storage mechanics from end-users.
+    *   **Multiple Views & Security**: Different users get different views of the same database based on access privileges (e.g., an ATM user only sees their own account details, whereas a bank manager or regional manager sees broader administrative data).
+
+---
+
+## Lecture 7: Key Characteristics of DBMS
 *   **Self-Describing Database System**: The database contains both the actual database records and a catalog defining the structure of all files, data types, and constraints.
 *   **Insulation Between Programs and Data (Program-Data Independence)**: The structure of data files is stored in the DBMS catalog separately from the application programs. Changes to the physical structure of a file do not require rewriting the applications.
 *   **Data Abstraction**: The DBMS provides a conceptual representation of data to users, hiding physical storage details (like block layouts or index paths).
@@ -162,7 +185,7 @@ graph LR
 
 ---
 
-## Lecture 7: Database Users & Database Administrator (DBA)
+## Lecture 8: Database Users & Database Administrator (DBA)
 1.  **Database Administrator (DBA)**: Responsible for authorizing access, monitoring usage, tuning performance, schema creation, and coordinate backing up/recovering databases.
 2.  **Naive / Parametric Users**: Interact with the system through pre-written application interfaces (e.g., bank tellers, airline reservation clerks, e-commerce customers).
 3.  **Sophisticated Users**: Engineers, analysts, or scientists who write complex database queries directly in SQL to perform custom reporting and data mining.
@@ -170,7 +193,7 @@ graph LR
 
 ---
 
-## Lecture 8: Database Languages (DDL, DML, DCL, TCL)
+## Lecture 9: Database Languages (DDL, DML, DCL, TCL)
 *   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
     *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
 *   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
@@ -181,24 +204,7 @@ graph LR
 
 ---
 
-## Lecture 9: Three-Schema Architecture (Levels of Abstraction)
-This architecture separates the user application interfaces from the physical database files to ensure data independence.
 
-```mermaid
-graph TD
-    User1[User App / External View 1] --> ExtSchema1[External Schema 1]
-    User2[User App / External View 2] --> ExtSchema2[External Schema 2]
-    ExtSchema1 --> Conceptual[Conceptual Level / Logical Schema]
-    ExtSchema2 --> Conceptual
-    Conceptual --> Internal[Internal Level / Physical Schema]
-    Internal --> PhysicalData[(Physical Storage Blocks on Disk)]
-```
-
-1.  **External Level / External Schema**: Describes the part of the database that a specific user group is interested in, hiding the rest of the database structure.
-2.  **Conceptual Level / Conceptual Schema**: Describes the logical structure of the entire database (entities, attributes, relationships, constraints). It hides the physical storage details.
-3.  **Internal Level / Internal Schema**: Describes the physical storage structure of the database (physical block sizes, file paths, record clustering, indexes).
-
----
 
 ## Lecture 10: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
