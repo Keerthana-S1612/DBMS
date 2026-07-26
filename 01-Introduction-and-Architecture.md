@@ -206,7 +206,13 @@ graph LR
 ---
 
 ## Lecture 14: 3-Tier Architecture
-*   **Concept**: An intermediate layer called the **Application Server** or **Web Server** is introduced between the Client and the Database Server.
+
+### 1. Introduction to Three-Tier Architecture
+*   **Overview**: A software architecture predominantly used for client-server applications where the components are divided into three logically and physically separate tiers.
+*   **Key Advantages**:
+    *   **Independent Infrastructure**: Each tier runs on its own environment or server.
+    *   **Faster Development**: Tiers can be developed, tested, and maintained simultaneously by different teams.
+    *   **Scalability & Security**: Each tier can be updated, scaled, and secured independently without affecting other tiers.
 
 ```mermaid
 graph LR
@@ -214,11 +220,24 @@ graph LR
     AppServer -->|SQL Connection| DBServer[Database Server: Data Storage]
 ```
 
-*   **Layers**:
-    1.  **Presentation Layer**: The UI running on the client machine (e.g., web browser).
-    2.  **Application Layer / Business Logic**: Processes validation rules, calculates inputs, and coordinates data flow.
-    3.  **Database Layer**: Executes SQL transactions and manages storage.
-*   **Pros**: Highly secure (database credentials are kept on the secure application server), highly scalable, and easy to deploy updates since business logic is centralized.
+### 2. The Three Tiers Explained
+*   **A. Presentation Tier (Client / Front-End)**:
+    *   **Role**: The topmost level that directly interacts with the end-user.
+    *   **Function**: Collects input data from users and displays information back to them (e.g., mobile banking apps or web browsers).
+    *   **Technologies Used**: HTML, CSS, JavaScript, Desktop GUI frameworks.
+*   **B. Application Tier (Middle Tier / Web Server)**:
+    *   **Role**: The heart of the system containing all the business logic, processing rules, and transaction computations.
+    *   **Function**: Processes user inputs from the front-end and communicates with the back-end database using API calls.
+    *   **Technologies Used**: Python, Java, PHP, Perl, Ruby.
+*   **C. Data Tier (Database / Back-End)**:
+    *   **Role**: The bottom-most tier where physical data storage and management occur.
+    *   **Function**: Stores and manages records permanently via Database Management Systems (DBMS). It does not interact directly with the client-tier in a three-tier architecture.
+    *   **Technologies Used**: MySQL, Oracle, PostgreSQL, MS SQL Server, MongoDB, Cassandra.
+
+### 3. General Abstraction Levels
+*   **External / View Level**: Maps to the topmost tier (Presentation Tier) offering multiple views to end-users based on their roles.
+*   **Conceptual Level**: Maps to the middle tier (Application Tier) where business rules and logical structures are defined.
+*   **Internal Level**: Maps to the bottom-most tier (Data Tier) where physical database storage at the bottom occurs.
 
 ---
 
