@@ -117,95 +117,7 @@ The curriculum is organized into 14 key chapters:
 
 ---
 
-## Lecture 5: Key Characteristics of DBMS
-*   **Self-Describing Database System**: The database contains both the actual database records and a catalog defining the structure of all files, data types, and constraints.
-*   **Insulation Between Programs and Data (Program-Data Independence)**: The structure of data files is stored in the DBMS catalog separately from the application programs. Changes to the physical structure of a file do not require rewriting the applications.
-*   **Data Abstraction**: The DBMS provides a conceptual representation of data to users, hiding physical storage details (like block layouts or index paths).
-*   **Support of Multiple Views of the Data**: Different users can see different representations of the same underlying data (e.g., a student sees their GPA, while the registrar sees full mark transcripts).
-*   **Sharing of Data and Multi-User Transaction Processing**: Allows concurrent transactions to run safely while preserving ACID rules.
-
----
-
-## Lecture 6: Database Users & Database Administrator (DBA)
-1.  **Database Administrator (DBA)**: Responsible for authorizing access, monitoring usage, tuning performance, schema creation, and coordinate backing up/recovering databases.
-2.  **Naive / Parametric Users**: Interact with the system through pre-written application interfaces (e.g., bank tellers, airline reservation clerks, e-commerce customers).
-3.  **Sophisticated Users**: Engineers, analysts, or scientists who write complex database queries directly in SQL to perform custom reporting and data mining.
-4.  **Application Programmers**: Software developers who write programs (e.g., in Java, Python, C#) that execute database transactions.
-
----
-
-## Lecture 7: Database Languages (DDL, DML, DCL, TCL)
-*   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
-    *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
-*   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
-    *   *Procedural DML*: User specifies *what* data is needed and *how* to get it (e.g., Relational Algebra).
-    *   *Non-Procedural DML*: User specifies *what* data is needed without describing how to get it (e.g., SQL).
-*   **DCL (Data Control Language)**: Used to configure permissions and authorizations (`GRANT`, `REVOKE`).
-*   **TCL (Transaction Control Language)**: Used to manage transaction execution states (`COMMIT`, `ROLLBACK`, `SAVEPOINT`).
-
----
-
-## Lecture 8: Three-Schema Architecture (Levels of Abstraction)
-This architecture separates the user application interfaces from the physical database files to ensure data independence.
-
-```mermaid
-graph TD
-    User1[User App / External View 1] --> ExtSchema1[External Schema 1]
-    User2[User App / External View 2] --> ExtSchema2[External Schema 2]
-    ExtSchema1 --> Conceptual[Conceptual Level / Logical Schema]
-    ExtSchema2 --> Conceptual
-    Conceptual --> Internal[Internal Level / Physical Schema]
-    Internal --> PhysicalData[(Physical Storage Blocks on Disk)]
-```
-
-1.  **External Level / External Schema**: Describes the part of the database that a specific user group is interested in, hiding the rest of the database structure.
-2.  **Conceptual Level / Conceptual Schema**: Describes the logical structure of the entire database (entities, attributes, relationships, constraints). It hides the physical storage details.
-3.  **Internal Level / Internal Schema**: Describes the physical storage structure of the database (physical block sizes, file paths, record clustering, indexes).
-
----
-
-## Lecture 9: Physical Data Independence
-*   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
-*   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
-
----
-
-## Lecture 10: Logical Data Independence
-*   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
-*   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
-
----
-
-## Lecture 11: Schema Mappings
-*   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
-*   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
-*   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
-*   **Importance**: When a schema at one level changes, only the mapping to the adjacent level needs modification. The schemas at other levels remain untouched.
-
----
-
-## Lecture 12: Database Architectures Overview
-*   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
-*   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
-
----
-
-## Lecture 13: 2-Tier Architecture
-*   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
-
-```mermaid
-graph LR
-    Client[Client Machine: UI & Application Logic] -->|Direct Connection JDBC/ODBC| DB[Database Server]
-```
-
-*   **Pros**: Direct and simple communication.
-*   **Cons**:
-    1.  **Security**: Database credentials (connection strings) are often stored in the client-side code, creating vulnerabilities.
-    2.  **Maintenance**: If business logic changes, the client application must be updated on every user machine.
-
----
-
-## Lecture 14: 3-Tier Architecture
+## Lecture 5: Three-Tier Architecture
 
 ### 1. Introduction to Three-Tier Architecture
 *   **Overview**: A software architecture predominantly used for client-server applications where the components are divided into three logically and physically separate tiers.
@@ -240,6 +152,96 @@ graph LR
 *   **Internal Level**: Maps to the bottom-most tier (Data Tier) where physical database storage at the bottom occurs.
 
 ---
+
+## Lecture 6: Key Characteristics of DBMS
+*   **Self-Describing Database System**: The database contains both the actual database records and a catalog defining the structure of all files, data types, and constraints.
+*   **Insulation Between Programs and Data (Program-Data Independence)**: The structure of data files is stored in the DBMS catalog separately from the application programs. Changes to the physical structure of a file do not require rewriting the applications.
+*   **Data Abstraction**: The DBMS provides a conceptual representation of data to users, hiding physical storage details (like block layouts or index paths).
+*   **Support of Multiple Views of the Data**: Different users can see different representations of the same underlying data (e.g., a student sees their GPA, while the registrar sees full mark transcripts).
+*   **Sharing of Data and Multi-User Transaction Processing**: Allows concurrent transactions to run safely while preserving ACID rules.
+
+---
+
+## Lecture 7: Database Users & Database Administrator (DBA)
+1.  **Database Administrator (DBA)**: Responsible for authorizing access, monitoring usage, tuning performance, schema creation, and coordinate backing up/recovering databases.
+2.  **Naive / Parametric Users**: Interact with the system through pre-written application interfaces (e.g., bank tellers, airline reservation clerks, e-commerce customers).
+3.  **Sophisticated Users**: Engineers, analysts, or scientists who write complex database queries directly in SQL to perform custom reporting and data mining.
+4.  **Application Programmers**: Software developers who write programs (e.g., in Java, Python, C#) that execute database transactions.
+
+---
+
+## Lecture 8: Database Languages (DDL, DML, DCL, TCL)
+*   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
+    *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
+*   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
+    *   *Procedural DML*: User specifies *what* data is needed and *how* to get it (e.g., Relational Algebra).
+    *   *Non-Procedural DML*: User specifies *what* data is needed without describing how to get it (e.g., SQL).
+*   **DCL (Data Control Language)**: Used to configure permissions and authorizations (`GRANT`, `REVOKE`).
+*   **TCL (Transaction Control Language)**: Used to manage transaction execution states (`COMMIT`, `ROLLBACK`, `SAVEPOINT`).
+
+---
+
+## Lecture 9: Three-Schema Architecture (Levels of Abstraction)
+This architecture separates the user application interfaces from the physical database files to ensure data independence.
+
+```mermaid
+graph TD
+    User1[User App / External View 1] --> ExtSchema1[External Schema 1]
+    User2[User App / External View 2] --> ExtSchema2[External Schema 2]
+    ExtSchema1 --> Conceptual[Conceptual Level / Logical Schema]
+    ExtSchema2 --> Conceptual
+    Conceptual --> Internal[Internal Level / Physical Schema]
+    Internal --> PhysicalData[(Physical Storage Blocks on Disk)]
+```
+
+1.  **External Level / External Schema**: Describes the part of the database that a specific user group is interested in, hiding the rest of the database structure.
+2.  **Conceptual Level / Conceptual Schema**: Describes the logical structure of the entire database (entities, attributes, relationships, constraints). It hides the physical storage details.
+3.  **Internal Level / Internal Schema**: Describes the physical storage structure of the database (physical block sizes, file paths, record clustering, indexes).
+
+---
+
+## Lecture 10: Physical Data Independence
+*   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
+*   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
+
+---
+
+## Lecture 11: Logical Data Independence
+*   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
+*   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
+
+---
+
+## Lecture 12: Schema Mappings
+*   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
+*   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
+*   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
+*   **Importance**: When a schema at one level changes, only the mapping to the adjacent level needs modification. The schemas at other levels remain untouched.
+
+---
+
+## Lecture 13: Database Architectures Overview
+*   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
+*   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
+
+---
+
+## Lecture 14: 2-Tier Architecture
+*   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
+
+```mermaid
+graph LR
+    Client[Client Machine: UI & Application Logic] -->|Direct Connection JDBC/ODBC| DB[Database Server]
+```
+
+*   **Pros**: Direct and simple communication.
+*   **Cons**:
+    1.  **Security**: Database credentials (connection strings) are often stored in the client-side code, creating vulnerabilities.
+    2.  **Maintenance**: If business logic changes, the client application must be updated on every user machine.
+
+---
+
+
 
 ## Lecture 15: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
