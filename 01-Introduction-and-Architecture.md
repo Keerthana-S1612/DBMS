@@ -342,7 +342,75 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 ---
 
-## Lecture 10: Database Languages (DDL, DML, DCL, TCL)
+## Lecture 10: Data Models
+
+### 1. Fundamental Definition of Data Models
+*   **Core Definition**: A Data Model is a conceptual tool that defines the underlying structure of a database.
+*   **4 Elements Described by a Data Model**:
+    1.  **Data**: What type of information is stored in the database.
+    2.  **Data Relationships**: How different data elements or tables connect with each other.
+    3.  **Data Semantics**: What the stored data actually means in context.
+    4.  **Data Constraints**: Specific rules or restrictions on valid vs. invalid data (e.g., allowed ranges, missing values).
+*   **3 Architectural Levels of Design**: Data models facilitate database design across all three levels of the 3-tier DBMS architecture:
+    *   **Physical Level**: Low-level storage on disks.
+    *   **Logical Level**: Structural organization into entities/tables.
+    *   **View Level**: Customized user interfaces/views.
+
+### 2. Category 1: Relational Model
+*   **Core Concept**: Stores data and relationships strictly in two-dimensional Tables (termed Relations) containing rows and columns.
+*   **Key Properties**:
+    *   **Unique Naming**: Every column (attribute) within a table must have a unique name, and every table (relation) in the database must have a unique name.
+    *   **Relationships as Tables**: Both data entities (e.g., Student, Instructor) and their relationships are stored as tables.
+    *   **Record-Based**: Known as a Record-Based Data Model where each record contains a fixed number of fields or attributes.
+*   **Hierarchy of Relational Concepts**:
+    \[\text{Fields (Columns)} \longrightarrow \text{Record (Row)} \longrightarrow \text{Table (Relation)} \longrightarrow \text{Database} \longrightarrow \text{RDBMS}\]
+*   **Concrete Example (Employee Relation)**:
+    *   *Attributes*: First Name, Last Name, Salary, Dept_No.
+    *   *Record*: Tom | Ford | 30000 | 3.
+*   **Usage**: It is the most widely used model powering modern commercial DBMSs.
+
+### 3. Category 2: Entity-Relationship (ER) Model
+*   **Core Concept**: A schematic/diagrammatic tool based on real-world Entities and the Relationships between them.
+*   **Components**:
+    *   **Entities**: Real-world objects/things that are distinguishable from others (e.g., Employee, Department, Project, Dependent).
+    *   **Attributes**: Properties describing an entity (e.g., SSN, Salary, or composite attributes like Name $\rightarrow$ First Name, Middle Name, Last Name).
+    *   **Relationships**: Links between entities (e.g., Employee works_for Department, Employee works_on Project).
+*   **Primary Use Case**: Used extensively during the Database Design phase prior to creating physical tables.
+
+### 4. Category 3: Object-Based Data Model
+*   **Core Concept**: Extends the ER Model by incorporating core Object-Oriented Programming (OOP) concepts.
+*   **Why it Exists**: Serves as a bridge when front-end applications are built using OOP languages (C++, Java, C#) that require backend database compatibility.
+*   **Key OOP Features Incorporated**:
+    *   Data Encapsulation
+    *   Inheritance
+    *   Object Identity
+*   **Variant - Object-Relational Model**: Combines the features of the Object-Based Model with the traditional Relational Model.
+    *   *Example*: Storing a Person object with attributes (Name, Age, Address, Phone_Number) directly matching class structures.
+
+### 5. Category 4: Semi-Structured Data Model
+*   **Core Concept**: Allows individual data items of the same type to have different sets of attributes (unlike rigid relational tables).
+*   **Primary Use Case**: Facilitates seamless data exchange and transfer between different software applications.
+*   **Standard Language**: Expressed using Extensible Markup Language (XML).
+*   **XML Example Breakdown**:
+    ```xml
+    <note>
+        <from>Database Academy</from>
+        <to>All Students</to>
+        <subject>Thank You</subject>
+        <body>Thank you for studying with us. Good luck!</body>
+    </note>
+    ```
+    *   **User-Defined Tags**: Unlike HTML, tags in XML are fully customizable (e.g., `<note>`, `<from>`, `<to>`).
+    *   **Hierarchical Tree Structure**: Root/parent tag (`<note>`) contains nested child tags (`<from>`, `<to>`, `<subject>`, `<body>`) combining structural metadata alongside the actual stored values.
+
+### 6. Obsolete / Legacy Data Models
+1.  **Network Data Model (Uses Graph Structures)**
+2.  **Hierarchical Data Model (Uses Tree Structures)**
+*   **Why They Are Obsolete**: Both models are tightly bound to low-level hardware/implementation details, making data modeling overly complex and rigid. Today, they exist only in legacy systems.
+
+---
+
+## Lecture 11: Database Languages (DDL, DML, DCL, TCL)
 *   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
     *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
 *   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
@@ -355,19 +423,19 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 
 
-## Lecture 11: Physical Data Independence
+## Lecture 12: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 12: Logical Data Independence
+## Lecture 13: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 13: Schema Mappings
+## Lecture 14: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -375,13 +443,13 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 ---
 
-## Lecture 14: Database Architectures Overview
+## Lecture 15: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 15: 2-Tier Architecture
+## Lecture 16: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -398,7 +466,7 @@ graph LR
 
 
 
-## Lecture 16: Classification of DBMS
+## Lecture 17: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
