@@ -95,25 +95,29 @@ The curriculum is organized into 14 key chapters:
 
 ---
 
-## Lecture 5: Drawbacks of Traditional File System
-1.  **Data Redundancy & Inconsistency**: The same data is stored multiple times in different places.
-    *   *Redundancy Example*: Student Address is stored in both the `Hostel_Records` file and the `Academic_Records` file.
-    *   *Inconsistency Example*:
-        
-        **Hostel_Records File:**
-        | Student_ID | Name | Address |
-        | :--- | :--- | :--- |
-        | S101 | John Doe | 123 Main St, NY |
+## Lecture 5: Key Drawbacks of File Systems vs. DBMS
 
-        **Academic_Records File (Failed to update when student moved):**
-        | Student_ID | Name | Address |
-        | :--- | :--- | :--- |
-        | S101 | John Doe | 456 Oak Ave, CA |
-
-2.  **Data Isolation**: Data is scattered across multiple files in different formats. Writing new applications to retrieve correct data is extremely difficult.
-3.  **Integrity Problems**: Data values must satisfy constraints (e.g., `Account_Balance >= 0`). In a file system, these checks are hard-coded in the application program. Adding new constraints requires rewriting the code.
-4.  **Concurrent Access Anomalies**: Multiple users accessing the same file concurrently can cause data corruption (e.g., booking the same airline seat simultaneously).
-5.  **Security Problems**: It is difficult to restrict users to specific subsets of data (e.g., allowing a secretary to view student contact info but not marks).
+1.  **Data Redundancy and Inconsistency**:
+    *   **Redundancy**: Different programmers and applications create duplicate files, which increases storage costs and makes searching and accessing data more difficult.
+    *   **Inconsistency**: Updating a record in one file or location does not automatically update it elsewhere. This leads to conflicting data across files. A DBMS handles this seamlessly by propagating updates.
+2.  **Difficulty in Accessing Data**:
+    *   Extracting specific information (e.g., listing employees earning more than $50,000 or filtering students by city and credits) requires manual search or custom code in a file system.
+    *   A DBMS allows fast, flexible, and convenient data retrieval using declarative query languages like SQL.
+3.  **Data Isolation**:
+    *   Files are scattered across various formats, folders, and directories, making it difficult to isolate or consolidate data.
+    *   A DBMS consolidates all data into a centralized database for simplified retrieval and automated backups.
+4.  **Integrity Problems**:
+    *   File systems cannot natively enforce validation rules (e.g., ensuring a salary is non-zero or that an ID contains only digits).
+    *   A DBMS allows users to enforce strict constraints (like non-zero bank balances) easily across single or multiple tables.
+5.  **Atomicity Problems**:
+    *   File systems struggle with "all-or-nothing" execution. If a failure occurs mid-transaction (e.g., money is debited from Account A but not credited to Account B during a fund transfer), the data remains corrupted.
+    *   A DBMS ensures atomicity by automatically rolling back partial executions to restore system consistency upon failure.
+6.  **Concurrent Access Anomalies**:
+    *   When multiple users access and modify shared files simultaneously, it can result in incorrect overwrites or force files into read-only modes.
+    *   A DBMS handles concurrent access seamlessly without causing data inconsistencies.
+7.  **Security Problems**:
+    *   File systems offer basic access restrictions (like password-locking an entire file) but cannot easily restrict access to specific rows or columns.
+    *   A DBMS allows fine-grained access control, creating specific views and privileges based on user roles (e.g., Database Administrator vs. regular user).
 
 ---
 
