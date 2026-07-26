@@ -297,7 +297,52 @@ The users of a Database Management System (DBMS) are categorized into 4 primary 
 
 ---
 
-## Lecture 9: Database Languages (DDL, DML, DCL, TCL)
+## Lecture 9: Database Administrator (DBA)
+
+### 1. Introduction to the Database Administrator (DBA)
+*   **Definition**: The DBA is a central figure in any organization using a database system who holds complete and central control over both the database system and the programs accessing it.
+*   **Centralized Authority**:
+    *   Databases act as a single centralized unit rather than being distributed across individual user machines.
+    *   The DBA is the sole authority granted full elevated privileges over this central database.
+    *   Without a DBA, managing system-wide access, security, and maintenance is practically impossible.
+
+### 2. Core Functions of a DBA
+The DBA's responsibilities are divided into 5 primary functions:
+*   **Function 1: Schema Definition**:
+    *   *Role*: The DBA designs and establishes the overall structural framework (schema) of the database.
+    *   *Tools Used*: Authorized to write and execute Data Definition Language (DDL) commands in SQL (such as `CREATE TABLE`, `ALTER TABLE`).
+    *   *Scope*: Defines table structures, column definitions, data types, and structural relationships.
+*   **Function 2: Storage Structure & Access Method Definition**:
+    *   *Role*: Decides how data is organized physically on storage devices and how users/programs access that data.
+    *   *Scope*: Configures storage layouts on disk drives and specifies permitted or restricted data access methods.
+*   **Function 3: Schema & Physical Organization Modification**:
+    *   *Role*: Performs modifications to the database structure (logical schema) or low-level storage layout whenever organizational requirements change.
+    *   *Scope*: Alters table designs, updates indexing structures, or shifts physical data layouts to adapt to growing business needs.
+*   **Function 4: Granting Authorization for Data Access**:
+    *   *Role*: Controls security by enforcing the principle of Authorization ("Who can access what").
+    *   *Scope*: Assigns role-based permissions across various organizational levels:
+        *   **Bank Teller / Clerk**: Access limited to basic transaction and account balance lookup.
+        *   **Bank Manager**: Higher privileges to view sensitive reports or authorize large transactions.
+        *   **End Users / Customers**: Access limited purely to personal account information.
+*   **Function 5: Integrity Constraint Specification**:
+    *   *Role*: Defines integrity constraints (e.g., checks, keys) that the data must satisfy.
+
+### 3. Routine Maintenance Activities
+In addition to core structural responsibilities, the DBA manages day-to-day database health through three vital routine tasks:
+1.  **Periodic Backups**:
+    *   *Hardware & Software Failures*: Hard drives, SSDs, or database software can crash unexpectedly. Periodic backups ensure the data can be fully restored.
+    *   *Natural Calamities*: Disasters like floods or earthquakes can destroy physical data centers. DBAs maintain off-site/remote backups to guarantee disaster recovery.
+2.  **Disk Space Management**:
+    *   *Storage Allocation*: Databases expand rapidly as new users register and new transactions accumulate.
+    *   *Role*: The DBA continuously monitors available disk space to prevent storage exhaustion and system crashes.
+3.  **Performance Tuning & Monitoring**:
+    *   *Response Speed*: Database systems must execute queries and return results rapidly.
+    *   *Example*: When withdrawing cash at an ATM, delays caused by sluggish query processing result in bad user experiences.
+    *   *Role*: The DBA routinely audits underlying hardware performance and optimizes queries to maintain high throughput and minimal latency.
+
+---
+
+## Lecture 10: Database Languages (DDL, DML, DCL, TCL)
 *   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
     *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
 *   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
@@ -310,19 +355,19 @@ The users of a Database Management System (DBMS) are categorized into 4 primary 
 
 
 
-## Lecture 10: Physical Data Independence
+## Lecture 11: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 11: Logical Data Independence
+## Lecture 12: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 12: Schema Mappings
+## Lecture 13: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -330,13 +375,13 @@ The users of a Database Management System (DBMS) are categorized into 4 primary 
 
 ---
 
-## Lecture 13: Database Architectures Overview
+## Lecture 14: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 14: 2-Tier Architecture
+## Lecture 15: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -353,7 +398,7 @@ graph LR
 
 
 
-## Lecture 15: Classification of DBMS
+## Lecture 16: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
