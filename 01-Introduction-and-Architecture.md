@@ -410,7 +410,44 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 ---
 
-## Lecture 11: Database Languages (DDL, DML, DCL, TCL)
+## Lecture 11: Storage Manager
+
+### 1. Introduction & Real-Time Context
+*   **Data Volume**: Modern DBMS applications handle massive amounts of data ranging from Gigabytes (GB) and Terabytes (TB) to Petabytes (PB) and Exabytes.
+*   **Storage Limitations**: Main Memory (RAM) cannot store the database permanently because it is volatile. Secondary storage (HDD/SSD) is also insufficient on its own due to the sheer volume of data, necessitating large storage servers, data centers, and cloud storage.
+*   **Real-time Example**: On platforms like Facebook or WhatsApp, even if you delete a posted photo, it is only removed from your and your friends' view—it isn't instantly purged from the server backend. Handling such high volumes of persistent data requires complex database systems.
+
+### 2. Database System Architecture Overview
+*   **Architecture Structure**: The architecture consists of top-level Users/Applications, Query Processor, Storage Manager, and Disk Storage.
+*   **Focus of Part 1**: The Part 1 video focuses exclusively on the Storage Manager and Disk Storage components (leaving the Query Processor for Part 2).
+
+### 3. Role of the Storage Manager
+*   **Interface/Bridge**: The Storage Manager acts as an interface between the high-level application programs/queries and the low-level raw data stored on the disk.
+*   **DML Translation**: It translates Data Manipulation Language (DML) statements (e.g., SELECT, INSERT, UPDATE, DELETE) into low-level file system commands supported by the host operating system.
+*   **Data Handling**: Internally, data is stored in files using the OS file system, but the DBMS manages these files differently to ensure efficient storage and retrieval.
+
+### 4. Key Components of the Storage Manager
+*   **Buffer Manager**:
+    *   Responsible for fetching data from disk storage into main memory and deciding what data to cache for faster access.
+    *   Manages memory limitations when databases are significantly larger than the physical main memory.
+*   **File Manager**:
+    *   Handles space allocation on disk storage and manages the underlying data structures representing the stored files.
+*   **Authorization & Integrity Manager**:
+    *   **Integrity Constraints**: Checks and enforces integrity constraints (e.g., ensuring an account balance never drops below zero).
+    *   **Authorization**: Checks user permissions to determine who is allowed to access or modify specific data items.
+*   **Transaction Manager**:
+    *   Ensures the database remains in a consistent state despite system, hardware, or software failures.
+    *   Controls concurrent operations so that multiple users accessing shared data simultaneously do not cause conflicts.
+
+### 5. Data Structures in Disk Storage
+*   **Data Files**: Stores the actual raw database contents.
+*   **Data Dictionary**: Stores metadata (data about data, such as schema definitions and structure info).
+*   **Indices**: Provides fast access to requested data items (analogous to the index pages at the back of a textbook).
+*   **Statistical Data**: Holds statistical metrics about the data to help the query processor optimize query execution and management decisions.
+
+---
+
+## Lecture 12: Database Languages (DDL, DML, DCL, TCL)
 *   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
     *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
 *   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
@@ -423,19 +460,19 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 
 
-## Lecture 12: Physical Data Independence
+## Lecture 13: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 13: Logical Data Independence
+## Lecture 14: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 14: Schema Mappings
+## Lecture 15: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -443,13 +480,13 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 ---
 
-## Lecture 15: Database Architectures Overview
+## Lecture 16: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 16: 2-Tier Architecture
+## Lecture 17: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -466,7 +503,7 @@ graph LR
 
 
 
-## Lecture 17: Classification of DBMS
+## Lecture 18: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
