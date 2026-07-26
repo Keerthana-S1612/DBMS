@@ -1,220 +1,200 @@
 # Chapter 1: Introduction to DBMS & System Architecture (Lectures 1 - 15)
 
-This chapter covers the foundations of Database Management Systems, contrasting them with traditional file systems, and dives deep into schemas, data independence, architectures, and system languages.
+This chapter covers the foundational concepts of Database Management Systems, contrasts them with traditional file systems, and details schemas, levels of abstraction, data independence, architectures, and classifications.
 
 ---
 
-## Video 1: Syllabus & Course Introduction
-### English
-*   **Concept**: Introduction to the course structure, key topics (ER Model, Relational Model, Normalization, SQL, Transactions, Indexing), and the importance of DBMS in computer science curricula, GATE exams, and software engineering interviews.
-*   **Takeaway**: Mastering DBMS is crucial for backend architecture, data consistency, and scalable system design.
+## Lecture 1: Syllabus & Course Introduction
 
-### Tamil (தமிழ்)
-*   **விளக்கம்**: இந்த பாடத்திட்டத்தின் அறிமுகம். ER மாடல், நார்மலைசேஷன், SQL, மற்றும் கன்சிஸ்டென்சி போன்ற முக்கிய தலைப்புகளின் மேலோட்டம். கேட் (GATE) தேர்வு மற்றும் இன்டர்வியூக்களில் இதன் முக்கியத்துவம் பற்றி Prabhu சார் விளக்குகிறார்.
+### 1. Real-World Analogy (Why DBMS is Needed)
+*   **Manufacturing Example**: Consider a pen/pencil manufacturing company. Merely manufacturing the product is not enough. You must record and track detailed data for operations (e.g., length, color, manufacturing date, cost/price, QR/barcodes, and physical batch location).
+*   **Handling Customer Complaints**: If a customer reports a faulty item, the company uses stored barcode data to trace the product back to its specific batch, production date, and raw material vendor to fix the root cause.
+*   **Accountability & Transparency**: Storing structured historical data across all departments (HR, Accounts, Logistics, Sales, R&D) ensures operational transparency and organizational accountability.
 
----
+### 2. Target Audience
+*   **Undergraduate Students**: Computer Science (CS) and Information Technology (IT) engineering students taking university-level DBMS courses.
+*   **Competitive Exam Aspirants**: Candidates preparing for examinations like GATE, ISRO, or technical PSU assessments.
+*   **Career Aspirants**: Individuals seeking positions in data engineering, backend software development, Data Analysis, or Business Analysis.
 
-## Video 2: What is a Database & DBMS?
-### English
-*   **Database**: A structured collection of logically related data.
-*   **DBMS (Database Management System)**: A software package designed to define, create, maintain, manipulate, and control access to databases.
-*   **Why DBMS?**: It provides a systematic, secure, and robust interface between application programs and database files.
+### 3. Syllabus Overview (14 Core Chapters)
+The curriculum is organized into 14 key chapters:
+1.  Introduction to RDBMS
+2.  Relational Database Concepts
+3.  Database Design & ER Model
+4.  Basics of SQL
+5.  Advanced SQL Features (Procedures, Triggers, Functions)
+6.  Formal Relational Query Languages & Relational Algebra
+7.  Normalization & Functional Dependencies
+8.  Storage and File Structures
+9.  Indexing and Hashing
+10. Query Processing & Optimization
+11. Transactions & Concurrency Control
+12. Database System Architectures
+13. Data Warehousing & Data Mining
+14. XML & Advanced Databases
 
-### Tamil (தமிழ்)
-*   **தரவுத்தளம் (Database)**: தர்க்கரீதியாக தொடர்புடைய தரவுகளின் முறையான தொகுப்பு.
-*   **DBMS**: தரவுத்தளத்தை உருவாக்கவும், திருத்தவும், பாதுகாக்கவும் உதவும் ஒரு மென்பொருள் (உதாரணம்: Oracle, MySQL).
-*   **ஏன் தேவை?**: கோப்புகளை ஒழுங்காகவும், பாதுகாப்பாகவும், ஒரே இடத்தில் சேமித்து அணுக இது தேவைப்படுகிறது.
-
----
-
-## Video 3: Traditional File System vs. DBMS
-### English
-*   **File System**: Data is stored in individual flat files (like CSVs or TXT files) managed by the OS. Each department owns its own files, leading to isolation.
-*   **DBMS**: Data is centralized, standardized, and shared. Metadata (description of data structure) is stored inside the database itself.
-
-### Tamil (தமிழ்)
-*   **கோப்பு முறைமை (File System)**: ஆப்பரேட்டிங் சிஸ்டம் மூலம் கோப்புகளைத் தனித்தனியாகச் சேமிப்பது.
-*   **ஒப்பீடு**: ஃபைல் சிஸ்டத்தில் தரவு தனித்தனியாகக் கிடக்கும், ஆனால் DBMS-ல் அனைத்துத் தரவும் மையப்படுத்தப்பட்டு, ஒழுங்குபடுத்தப்பட்டு, அனைவராலும் பகிரப்படும் தன்மையைக் கொண்டிருக்கும்.
-
----
-
-## Video 4: Drawbacks of Traditional File System
-### English
-*   **Data Redundancy & Inconsistency**: Same data stored in multiple places. If a student's address changes, it might be updated in the fee file but not in the library file.
-*   **Data Isolation**: Files are in different formats; writing new applications to retrieve appropriate data is difficult.
-*   **Integrity Problems**: Constraints (like `balance >= 0`) are hard-coded in applications rather than files.
-*   **Concurrent Access Anomalies**: If two users book a seat at the same time, inconsistency arises.
-*   **Security Problems**: Difficult to give partial access (e.g., allow a clerk to see names but not salaries).
-
-### Tamil (தமிழ்)
-*   **ஃபைல் சிஸ்டத்தின் குறைபாடுகள் (Ethuku DBMS?)**:
-  1. **அதிகப்படியான தரவு (Redundancy)**: ஒரே முகவரி நூலகத்திலும், கல்லூரி அலுவலகத்திலும் தனித்தனியாக இருக்கும். ஒன்றில் மாற்றி மற்றொன்றில் மாற்ற மறந்தால் பிழை (Inconsistency) ஏற்படும்.
-  2. **தனிமைப்படுத்தல் (Isolation)**: வெவ்வேறு கோப்புகள் வெவ்வேறு வடிவங்களில் இருக்கும்.
-  3. **பாதுகாப்புக் குறைபாடு**: குறிப்பிட்ட சிலருக்கு மட்டும் பகுதித் தரவைக் காட்ட முடியாது.
-  4. **ஒரே நேர அணுகல் சிக்கல் (Concurrency)**: ஒரே இருக்கையை இரண்டு பேர் ஒரே நேரத்தில் புக் செய்யும்போது குளறுபடி நடக்கும்.
+### 4. Career Opportunities (Scope)
+*   **Database Administrator (DBA)**: Complete privilege, maintenance, tuning, and access control over database systems.
+*   **Full Stack Developer / Backend Developer**: Core database knowledge needed to build APIs and backend application structures.
+*   **Other Roles**: Data Analyst, Business Analyst, Software Tester, and Security/Penetration Tester.
 
 ---
 
-## Video 5: Key Characteristics of DBMS
-### English
-*   **Self-describing nature**: Contains both data and the metadata (catalog/schema) defining it.
-*   **Insulation between programs and data**: Data structures can change without requiring modifications to the application code (Data Independence).
-*   **Support of multiple views**: Different users see different presentations of the same data.
-*   **Sharing of data**: Multi-user transaction processing ensuring safety (ACID properties).
 
-### Tamil (தமிழ்)
-*   **DBMS-ன் சிறப்புகள் (Enna special?)**:
-  * **சுய விளக்கத் தன்மை**: தரவு மற்றும் அதன் அமைப்பைக் காட்டும் மெட்டாடேட்டாவைக் கொண்டிருக்கும்.
-  * **தரவு-மென்பொருள் தனிமை**: டேபிள் அமைப்பை மாற்றினாலும், கோடிங்-ஐ மாற்ற வேண்டியதில்லை.
-  * **பலதரப்பட்ட பார்வைகள் (Multiple Views)**: மேலாளருக்கு ஒரு பார்வையும், வாடிக்கையாளருக்கு ஒரு பார்வையும் காட்டும்.
+## Lecture 2: What is a Database & DBMS?
+*   **Database**: A structured collection of logically related data, representing some aspect of the real world (sometimes called a miniworld or Universe of Discourse).
+*   **DBMS (Database Management System)**: A computerized software system that enables users to create, maintain, query, and manage a database.
+*   **Core Tasks**:
+    1.  **Define**: Specifying data types, structures, and constraints.
+    2.  **Construct**: Storing the data on a physical storage medium.
+    3.  **Manipulate**: Querying, updating, and generating reports.
+    4.  **Control**: Restricting unauthorized access and concurrency.
 
 ---
 
-## Video 6: Database Users & DBA
-### English
-*   **Database Administrator (DBA)**: Controls the database schema, security authorizations, performance tuning, and backup/recovery.
-*   **Naive Users**: Unsophisticated users interacting via pre-written applications (e.g., bank tellers, ticket booking customers).
-*   **Sophisticated Users**: Analysts or engineers writing queries directly in query languages (SQL) without writing programs.
-*   **Application Programmers**: Write host programs (C++, Java) that interact with the database.
+## Lecture 3: Traditional File System vs. DBMS
+*   **File System**: Data is stored in individual flat files (e.g., `.txt`, `.csv`) managed directly by the operating system. Each program is written with hard-coded file formats, meaning the application logic and data structure are tightly coupled.
+*   **DBMS**: Data is stored centrally. The data definition (metadata) is stored in a catalog (data dictionary) separated from application code, creating an abstraction layer.
 
-### Tamil (தமிழ்)
-*   **பயனர்கள்**:
-  * **DBA (நிர்வாகி)**: முழுமையான பாதுகாப்பு, பேக்கப், மற்றும் அனுமதிகளை வழங்குபவர்.
-  * **Naive Users**: பிரவுசர் அல்லது ஆப் மூலமாகப் பயன்படுத்தும் சாதாரண மக்கள் (ATM பயன்படுத்துபவர்).
-  * **Sophisticated Users**: நேரடி SQL குவரிகளை எழுதும் ஆய்வாளர்கள்.
-  * **அப்ளிகேஷன் புரோகிராமர்கள்**: டேட்டாபேஸை இணைக்கும் ஜாவா/பைதான் நிரல்களை எழுதுபவர்கள்.
+| Feature | Traditional File System | DBMS |
+| :--- | :--- | :--- |
+| **Data Structure** | Tightly coupled with the application program. | Stored independently in a system catalog. |
+| **Redundancy** | High (same details stored across different departments). | Minimized through normalization and joins. |
+| **Concurrency** | Difficult to lock specific records; files are locked. | Granular locks (row/page/table level) via transactions. |
+| **Security** | Coarse-grained OS-level file permissions. | Fine-grained roles, views, and row-level access control. |
 
 ---
 
-## Video 7: Database Languages (DDL, DML, DCL, TCL)
-### English
-*   **DDL (Data Definition Language)**: Used to define database schema structures (e.g., `CREATE`, `ALTER`, `DROP`, `TRUNCATE`). Stores metadata in the Data Dictionary.
-*   **DML (Data Manipulation Language)**: Used to retrieve and modify tuples (e.g., `SELECT`, `INSERT`, `UPDATE`, `DELETE`).
-*   **DCL (Data Control Language)**: Manages permissions (e.g., `GRANT`, `REVOKE`).
-*   **TCL (Transaction Control Language)**: Manages transactions (e.g., `COMMIT`, `ROLLBACK`).
+## Lecture 4: Drawbacks of Traditional File System
+1.  **Data Redundancy & Inconsistency**: The same data is stored multiple times in different places.
+    *   *Redundancy Example*: Student Address is stored in both the `Hostel_Records` file and the `Academic_Records` file.
+    *   *Inconsistency Example*:
+        
+        **Hostel_Records File:**
+        | Student_ID | Name | Address |
+        | :--- | :--- | :--- |
+        | S101 | John Doe | 123 Main St, NY |
 
-### Tamil (தமிழ்)
-*   **டேட்டாபேஸ் மொழிகள் (Eppati communication?)**:
-  * **DDL**: அட்டவணை வடிவத்தை உருவாக்க (`CREATE`, `DROP`).
-  * **DML**: தரவை மாற்றி அமைக்கவோ, பார்க்கவோ (`SELECT`, `INSERT`, `UPDATE`).
-  * **DCL**: அனுமதி வழங்க மற்றும் பறிக்க (`GRANT`, `REVOKE`).
-  * **TCL**: பரிவர்த்தனைகளைச் சேமிக்க (`COMMIT`, `ROLLBACK`).
+        **Academic_Records File (Failed to update when student moved):**
+        | Student_ID | Name | Address |
+        | :--- | :--- | :--- |
+        | S101 | John Doe | 456 Oak Ave, CA |
+
+2.  **Data Isolation**: Data is scattered across multiple files in different formats. Writing new applications to retrieve correct data is extremely difficult.
+3.  **Integrity Problems**: Data values must satisfy constraints (e.g., `Account_Balance >= 0`). In a file system, these checks are hard-coded in the application program. Adding new constraints requires rewriting the code.
+4.  **Concurrent Access Anomalies**: Multiple users accessing the same file concurrently can cause data corruption (e.g., booking the same airline seat simultaneously).
+5.  **Security Problems**: It is difficult to restrict users to specific subsets of data (e.g., allowing a secretary to view student contact info but not marks).
 
 ---
 
-## Video 8: Three-Schema Architecture (Levels of Abstraction)
-### English
-Designed to separate the user applications from the physical database structure.
-1. **External Level (Individual Views)**: What the users see. Multiple external schemas representing different user views.
-2. **Conceptual Level (Logical Schema)**: Describes what data is stored and relationship structures. Hidden physical detail.
-3. **Internal Level (Physical Schema)**: Describes physical storage structures, files, indexes, and paths.
+## Lecture 5: Key Characteristics of DBMS
+*   **Self-Describing Database System**: The database contains both the actual database records and a catalog defining the structure of all files, data types, and constraints.
+*   **Insulation Between Programs and Data (Program-Data Independence)**: The structure of data files is stored in the DBMS catalog separately from the application programs. Changes to the physical structure of a file do not require rewriting the applications.
+*   **Data Abstraction**: The DBMS provides a conceptual representation of data to users, hiding physical storage details (like block layouts or index paths).
+*   **Support of Multiple Views of the Data**: Different users can see different representations of the same underlying data (e.g., a student sees their GPA, while the registrar sees full mark transcripts).
+*   **Sharing of Data and Multi-User Transaction Processing**: Allows concurrent transactions to run safely while preserving ACID rules.
+
+---
+
+## Lecture 6: Database Users & Database Administrator (DBA)
+1.  **Database Administrator (DBA)**: Responsible for authorizing access, monitoring usage, tuning performance, schema creation, and coordinate backing up/recovering databases.
+2.  **Naive / Parametric Users**: Interact with the system through pre-written application interfaces (e.g., bank tellers, airline reservation clerks, e-commerce customers).
+3.  **Sophisticated Users**: Engineers, analysts, or scientists who write complex database queries directly in SQL to perform custom reporting and data mining.
+4.  **Application Programmers**: Software developers who write programs (e.g., in Java, Python, C#) that execute database transactions.
+
+---
+
+## Lecture 7: Database Languages (DDL, DML, DCL, TCL)
+*   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
+    *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
+*   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
+    *   *Procedural DML*: User specifies *what* data is needed and *how* to get it (e.g., Relational Algebra).
+    *   *Non-Procedural DML*: User specifies *what* data is needed without describing how to get it (e.g., SQL).
+*   **DCL (Data Control Language)**: Used to configure permissions and authorizations (`GRANT`, `REVOKE`).
+*   **TCL (Transaction Control Language)**: Used to manage transaction execution states (`COMMIT`, `ROLLBACK`, `SAVEPOINT`).
+
+---
+
+## Lecture 8: Three-Schema Architecture (Levels of Abstraction)
+This architecture separates the user application interfaces from the physical database files to ensure data independence.
 
 ```mermaid
 graph TD
-    Ext1[External View 1] --> Conceptual[Conceptual Level - Logical Schema]
-    Ext2[External View 2] --> Conceptual
-    Conceptual --> Internal[Internal Level - Physical Schema]
-    Internal --> Database[(Physical Database Files)]
+    User1[User App / External View 1] --> ExtSchema1[External Schema 1]
+    User2[User App / External View 2] --> ExtSchema2[External Schema 2]
+    ExtSchema1 --> Conceptual[Conceptual Level / Logical Schema]
+    ExtSchema2 --> Conceptual
+    Conceptual --> Internal[Internal Level / Physical Schema]
+    Internal --> PhysicalData[(Physical Storage Blocks on Disk)]
 ```
 
-### Tamil (தமிழ்)
-*   **முப்படி அடுக்குக் கட்டமைப்பு (Three-Schema)**:
-  1. **வெளிப்புற நிலை (External Level)**: பயனர் பார்க்கும் திரை (UI Views).
-  2. **கருத்தியல் நிலை (Conceptual Level)**: தரவுகளுக்கு இடையேயான உறவு மற்றும் அட்டவணைகளின் கட்டமைப்பு (Logical Schema).
-  3. **உள்நிலை (Internal Level)**: ஹார்ட் டிஸ்க்கில் தரவு எவ்வாறு பைனரியாக, இன்டெக்ஸ்களாகச் சேமிக்கப்படுகிறது என்பதை விளக்கும் இயற்பியல் கட்டமைப்பு.
+1.  **External Level / External Schema**: Describes the part of the database that a specific user group is interested in, hiding the rest of the database structure.
+2.  **Conceptual Level / Conceptual Schema**: Describes the logical structure of the entire database (entities, attributes, relationships, constraints). It hides the physical storage details.
+3.  **Internal Level / Internal Schema**: Describes the physical storage structure of the database (physical block sizes, file paths, record clustering, indexes).
 
 ---
 
-## Video 9: Physical Data Independence
-### English
-*   **Concept**: The ability to modify the physical/internal schema (e.g., changing file storage, rebuilding indexes, changing disk drives) without changing the conceptual/logical schema or user applications.
-*   **Why**: Optimizing query speed using new index structures should not break user queries.
-
-### Tamil (தமிழ்)
-*   **இயற்பியல் தரவுச் சுதந்திரம்**:
-  * **விளக்கம்**: ஹார்டு டிஸ்க் சேமிப்பு முறையையோ அல்லது குறியீடுகளையோ (Indexes) மாற்றினாலும், conceptual அட்டவணை அமைப்பையோ அல்லது அப்ளிகேஷன் குறியீடுகளையோ மாற்றத் தேவையில்லை.
+## Lecture 9: Physical Data Independence
+*   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
+*   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Video 10: Logical Data Independence
-### English
-*   **Concept**: The ability to modify the conceptual schema (e.g., adding a new table, splitting columns, adding attributes) without having to change the external schemas or existing application programs.
-*   **Note**: Harder to achieve than physical data independence because application logic is tightly bound to logical data structures.
-
-### Tamil (தமிழ்)
-*   **தர்க்கரீதியான தரவுச் சுதந்திரம்**:
-  * **விளக்கம்**: டேபிளில் புதிய காலம்களை (Columns) சேர்த்தாலோ அல்லது மாற்றினாலும், ஏற்கனவே இருக்கும் அப்ளிகேஷன்களைத் திருத்தத் தேவையில்லை.
+## Lecture 10: Logical Data Independence
+*   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
+*   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Video 11: Schema Mappings
-### English
-*   **Concept**: The process of transforming requests and results between the external, conceptual, and internal levels of the three-schema architecture.
-    *   **Conceptual/Internal Mapping**: Translates conceptual queries into physical storage paths.
-    *   **External/Conceptual Mapping**: Matches user-view queries to logical tables.
-*   **Role**: Enables data independence. If a schema level changes, only the mapping needs update, not the other schemas.
-
-### Tamil (தமிழ்)
-*   **வரைபடம் (Mappings)**:
-  * மூன்று அடுக்கு நிலைகளுக்கு இடையே தரவைக் கடத்தப் பயன்படும் மொழிபெயர்ப்பு முறை. அடுக்கு மாறும்போது மேப்பிங் மட்டுமே மாறும், பிற அடுக்குகள் பாதிக்கப்படாது.
+## Lecture 11: Schema Mappings
+*   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
+*   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
+*   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
+*   **Importance**: When a schema at one level changes, only the mapping to the adjacent level needs modification. The schemas at other levels remain untouched.
 
 ---
 
-## Video 12: Database Architectures Overview
-### English
-*   **Centralized**: DB runs on a single mainframe or server. Easy to administer, but forms a single point of failure and bottleneck.
-*   **Client-Server**: Split workload. Client runs UI and application logic; Server handles database storage and query execution.
-
-### Tamil (தமிழ்)
-*   **கட்டமைப்பு வகைகள்**:
-  * **மையப்படுத்தப்பட்ட (Centralized)**: ஒரே பெரிய சர்வரில் தரவுகள் இருக்கும்.
-  * **கிளையண்ட்-சர்வர் (Client-Server)**: பயனர் கணினியும், தரவுத்தள சர்வர் கணினியும் பிரிந்து வேலை செய்யும் முறை.
+## Lecture 12: Database Architectures Overview
+*   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
+*   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Video 13: 2-Tier Architecture
-### English
-*   **Concept**: The client application directly communicates with the database server on the backend.
-*   **Example**: Using JDBC/ODBC connections from a desktop Java program to run queries on SQL Server.
-*   **Pros**: Simple structure, fast response.
-*   **Cons**: Security risk (client contains DB credentials), hard to update business logic across thousands of client machines.
+## Lecture 13: 2-Tier Architecture
+*   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
-### Tamil (தமிழ்)
-*   **இரு அடுக்குக் கட்டமைப்பு (2-Tier)**:
-  * பயனர் கணினி நேரடியாகத் தரவுத்தள சர்வருடன் தொடர்பு கொள்ளும் முறை (உதாரணம்: JDBC).
-  * **குறைபாடு**: கிளையண்ட் மென்பொருளில் டேட்டாபேஸ் ரகசியக் குறியீடு இருப்பதால் பாதுகாப்பு குறைவு.
+```mermaid
+graph LR
+    Client[Client Machine: UI & Application Logic] -->|Direct Connection JDBC/ODBC| DB[Database Server]
+```
 
----
-
-## Video 14: 3-Tier Architecture
-### English
-*   **Concept**: An intermediate layer called the **Application Server (Web Server)** sits between the Client and the Database Server.
-    1. **Presentation Layer (Client)**: Browser interface.
-    2. **Application Layer (App Server)**: Evaluates business logic, processes validation rules.
-    3. **Database Layer (Data Server)**: Stores data and processes SQL transactions.
-*   **Why**: Highly secure, scalable, easy to update business logic centralized in the Application server.
-
-### Tamil (தமிழ்)
-*   **மூவடுக்குக் கட்டமைப்பு (3-Tier)**:
-  * கிளையண்ட் மற்றும் தரவுத்தளத்திற்கு இடையே ஒரு **அப்ளிகேஷன் சர்வர்** இருக்கும்.
-  1. **பிரசன்டேஷன் (Client)**: பயனர் திரை.
-  2. **அப்ளிகேஷன் சர்வர்**: பிசினஸ் லாஜிக் மற்றும் சரிபார்ப்புகளைச் செய்யும்.
-  3. **டேட்டா சர்வர்**: தரவைச் சேமிக்கும்.
-  * **நன்மை**: அதிக பாதுகாப்பு மற்றும் எளிய மேலாண்மை.
+*   **Pros**: Direct and simple communication.
+*   **Cons**:
+    1.  **Security**: Database credentials (connection strings) are often stored in the client-side code, creating vulnerabilities.
+    2.  **Maintenance**: If business logic changes, the client application must be updated on every user machine.
 
 ---
 
-## Video 15: Classification of DBMS
-### English
-Based on data models:
-1. **Relational DBMS (RDBMS)**: Data stored in tables (relations). (e.g., MySQL, Oracle, PostgreSQL).
-2. **Object-Oriented DBMS (OODBMS)**: Stores data as objects (similar to OOP classes).
-3. **Hierarchical DBMS**: Parent-Child tree structure (e.g., IBM IMS).
-4. **Network DBMS**: Graph structure allowing multi-parent nodes.
+## Lecture 14: 3-Tier Architecture
+*   **Concept**: An intermediate layer called the **Application Server** or **Web Server** is introduced between the Client and the Database Server.
 
-### Tamil (தமிழ்)
-*   **வகைப்பாடு**:
-  1. **ரிலேஷனல் (RDBMS)**: அட்டவணை வடிவில் சேமிக்கும் முறை (உலகில் அதிகம் பயன்படுவது).
-  2. **ஆப்ஜெக்ட்-ஓரியண்டட்**: OOP வகுப்புகளைப் போல தரவைச் சேமிப்பது.
-  3. **படிநிலை (Hierarchical)**: பெற்றோர்-குழந்தை மரக் கிளை வடிவம்.
-  4. **நெட்வொர்க்**: பல பெற்றோர்களைக் கொண்டிருக்க அனுமதிக்கும் வரைபடம் (Graph) வடிவம்.
+```mermaid
+graph LR
+    Client[Client Browser / UI] -->|HTTP/HTTPS| AppServer[Application Server: Business Logic]
+    AppServer -->|SQL Connection| DBServer[Database Server: Data Storage]
+```
+
+*   **Layers**:
+    1.  **Presentation Layer**: The UI running on the client machine (e.g., web browser).
+    2.  **Application Layer / Business Logic**: Processes validation rules, calculates inputs, and coordinates data flow.
+    3.  **Database Layer**: Executes SQL transactions and manages storage.
+*   **Pros**: Highly secure (database credentials are kept on the secure application server), highly scalable, and easy to deploy updates since business logic is centralized.
+
+---
+
+## Lecture 15: Classification of DBMS
+DBMS systems can be categorized based on their underlying data model:
+1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
+2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
+3.  **Hierarchical DBMS**: Organizes data in a parent-child tree structure. A child node can have only one parent node (e.g., IBM Information Management System).
+4.  **Network DBMS**: Organizes data in a graph structure. Unlike hierarchical models, a child node can have multiple parent nodes (e.g., Integrated Data Store).
