@@ -710,19 +710,101 @@ A complete Database Schema is a collection of relation schemas. Below is a real-
 
 ---
 
-## Lecture 19: Physical Data Independence
+## Lecture 19: Keys in Relational Databases
+
+### 1. Why Do We Need Keys in RDBMS?
+To perform database operations like updating or deleting a specific row (tuple), the database must be able to uniquely identify that single row.
+*   **Example Scenario**: Imagine an Employee table with the following columns:
+    *   `ID`: 101, 102, 105
+    *   `Name`: John (ID: 101), Robin (ID: 102), John (ID: 105)
+    *   `Salary`: 50000, 60000, 62000
+    *   *Issue*: If you tell the database: "Increase the salary of John by 10%", it will update all employees named John. If you try using salary: "Increase salary for anyone making 62000", multiple people might share that salary.
+    *   *Solution*: Using a unique column like `ID` (Update salary where `ID = 105`) targets only that specific record without affecting others.
+
+### 2. Super Key
+A **Super Key** is a single attribute (column) or a set of attributes that can uniquely identify a row in a table. It is the superset of all possible keys and can contain extra (extraneous) columns.
+*   **Characteristics**:
+    *   It uniquely identifies a row.
+    *   It can contain unnecessary/extra columns.
+    *   It can accept NULL values in some of its combined columns.
+*   **Example**:
+    *   `ID` (Unique on its own)
+    *   `SSN` (Social Security / Aadhar Number—Unique on its own)
+    *   `ID` + `Name` (Unique because ID is already unique, even though Name is extra)
+    *   `ID` + `Phone`
+
+### 3. Candidate Key
+A **Candidate Key** is a minimal Super Key. This means it is a Super Key with no unnecessary/extra attributes.
+*   **Characteristics**:
+    *   Uniquely identifies a row.
+    *   Minimal set of columns (no duplicate/extra information).
+    *   There should be no subset of a candidate key that can act as a key by itself.
+*   **Example**:
+    *   From the Super Key list (`ID`, `SSN`, `ID` + `Name`, `Name` + `Phone`), `ID` and `SSN` are Candidate Keys because they don't need any extra columns.
+    *   `ID` + `Name` is NOT a Candidate Key because `ID` alone is already enough to identify the row.
+    *   `Name` + `Phone` can be a Candidate Key if combining them makes every row unique.
+
+### 4. Primary Key
+A **Primary Key** is a single candidate key chosen by the Database Administrator (DBA) to uniquely identify rows in a table.
+*   **Characteristics**:
+    *   Must be 100% Unique.
+    *   Must NOT contain NULL values.
+    *   Values should never (or rarely) change.
+    *   A table can have only ONE Primary Key.
+*   **Example**:
+    *   Out of Candidate Keys like `ID`, `SSN`, `Email`, and `Name` + `Phone`, `ID` is selected as the Primary Key because every employee gets a permanent, non-changing, non-null ID.
+
+### 5. Alternate Key
+An **Alternate Key** is simply any Candidate Key that was NOT chosen as the Primary Key.
+*   **Formula**:
+    \[\text{Alternate Keys} = \text{Candidate Keys} - \text{Primary Key}\]
+*   **Example**:
+    *   If the Candidate Keys were `ID`, `SSN`, and `Email`, and `ID` was picked as the Primary Key, then `SSN` and `Email` become the Alternate Keys.
+
+### 6. Unique Key
+A **Unique Key** ensures that all values in a column are distinct (no duplicate values), BUT it can accept NULL values (unlike a Primary Key).
+*   **Example**:
+    *   `Email` or `Phone Number`: Every employee's email is unique, but a new employee might not have an email assigned yet (NULL). Therefore, `Email` acts as a Unique Key.
+
+### 7. Composite Key
+A **Composite Key** is any key (Super, Candidate, or Primary) that is formed by combining two or more columns to achieve uniqueness.
+*   **Example**:
+    *   `Name` + `Phone Number`: Name alone is not unique, and Phone alone might have nulls, but together (`Name` + `Phone`) they uniquely identify a row.
+
+### 8. Foreign Key
+A **Foreign Key** is used to create a link between two different tables. It is a column in a child table that refers to the Primary Key of a parent table, providing Referential Integrity.
+*   **Example**:
+    *   *Department Table (Parent)*: Has `Department Code` (100, 101, 102) as its Primary Key.
+    *   *Student Table (Child)*: Has `Student ID`, `Student Name`, and `Department Code` (Foreign Key).
+    *   *Referential Constraint*: If you try to insert a student with `Department Code = 200` into the Student Table, the database will reject it because 200 does not exist in the parent Department Table.
+
+### 9. Summary Cheat Sheet
+
+| Key Type | Main Rule | Can it have NULLs? |
+| :--- | :--- | :--- |
+| **Super Key** | Any combination of columns that uniquely identifies a row. | Yes |
+| **Candidate Key** | Minimal super key (no extra columns). | Yes (in some cases) |
+| **Primary Key** | Main key chosen for the table (Unique + Not Null). | **NO** |
+| **Alternate Key** | Candidate keys left after picking the Primary Key. | Yes |
+| **Unique Key** | Guarantees unique values in a column. | Yes |
+| **Composite Key** | A key made of two or more columns. | Depends on columns |
+| **Foreign Key** | A column pointing to the Primary Key of another table. | Yes |
+
+---
+
+## Lecture 20: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 20: Logical Data Independence
+## Lecture 21: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 21: Schema Mappings
+## Lecture 22: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -730,13 +812,13 @@ A complete Database Schema is a collection of relation schemas. Below is a real-
 
 ---
 
-## Lecture 22: Database Architectures Overview
+## Lecture 23: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 23: 2-Tier Architecture
+## Lecture 24: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -753,7 +835,7 @@ graph LR
 
 
 
-## Lecture 24: Classification of DBMS
+## Lecture 25: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
