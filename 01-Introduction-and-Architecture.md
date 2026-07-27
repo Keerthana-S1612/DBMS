@@ -792,19 +792,105 @@ A **Foreign Key** is used to create a link between two different tables. It is a
 
 ---
 
-## Lecture 20: Physical Data Independence
+## Lecture 20: Keys in DBMS - Solved Questions
+
+### Question 1: What is correct about keys in DBMS?
+*   **Options**:
+    *   a. It is mandatory in tables.
+    *   b. It can be changed frequently.
+    *   c. It can be a set of one or more columns that uniquely identify a record.
+    *   d. All of the above.
+*   **Correct Answer**: **c. It can be a set of one or more columns that uniquely identify a record**.
+*   **Explanation & Example**:
+    *   *Why C is correct*: A key can be a single column (like `Employee_ID`) or multiple columns combined together (like `First_Name + Phone_Number`) to uniquely identify a specific row.
+    *   *Why A is incorrect*: It is not strictly mandatory for every single table in a database to have a key defined.
+    *   *Why B is incorrect*: Key values should never (or very rarely) change. For example, a student’s Roll Number remains constant throughout their program.
+
+### Question 2: Which attribute is appropriate to be a key attribute?
+Given Table (Employee): Columns are ID, Name, Department, Salary, and City.
+*   **Options**:
+    *   a. ID
+    *   b. Name
+    *   c. Salary
+    *   d. None of the above
+*   **Correct Answer**: **a. ID**.
+*   **Explanation & Example**:
+    *   *ID*: Unique for every single employee in an organization (e.g., Employee 101, 102). No two employees share the same ID.
+    *   *Name / Salary*: Multiple employees can have the same name (e.g., two people named "John") or earn the exact same salary (e.g., $50,000). Therefore, they cannot uniquely identify a row.
+
+### Question 3: Which attribute(s) is/are appropriate for being a key attribute?
+Given Schema (Student): Columns are Name, Date_of_Birth, Age, City, and Zip_Code.
+*   **Options**:
+    *   a. Name
+    *   b. Name + Date of Birth
+    *   c. Name + City
+    *   d. None of the above
+*   **Correct Answer**: **d. None of the above**.
+*   **Explanation & Example**:
+    *   *Name alone*: Multiple students can share the exact same name.
+    *   *Name + City*: Two students named "Alex" could easily live in the same city (e.g., "New York").
+    *   *Name + Date of Birth*: While it is unlikely, two students with the same name could be born on the same date. Because it cannot guarantee 100% uniqueness across all edge cases, none of these options are guaranteed key attributes.
+
+### Question 4: The minimal super key is called as _____ key
+*   **Options**:
+    *   a. Primary Key
+    *   b. Foreign Key
+    *   c. Candidate Key
+    *   d. Alternate Key
+*   **Correct Answer**: **c. Candidate Key**.
+*   **Explanation & Example**:
+    *   A Super Key can contain unnecessary extra columns (e.g., `ID + Name + City`).
+    *   When you remove all extra columns so that only the essential attributes remain (e.g., just `ID`), it becomes a minimal Super Key, which is the exact definition of a Candidate Key.
+    *   *Primary Key vs. Candidate Key*: A table can have multiple Candidate Keys, but only one is selected as the Primary Key.
+
+### Question 5: The subset of a Super Key is a Candidate Key under what condition?
+*   **Options**:
+    *   a. Any subset is a Super Key
+    *   b. All subsets are Super Keys
+    *   c. No proper subset is a Super Key
+    *   d. None of the above
+*   **Correct Answer**: **c. No proper subset is a Super Key**.
+*   **Explanation & Example**:
+    *   Suppose `Name + Phone_Number` acts as a Candidate Key.
+    *   The proper subsets of this key are `Name` alone and `Phone_Number` alone.
+    *   Neither `Name` alone nor `Phone_Number` alone can act as a Super Key by itself in this context.
+    *   *Rule*: A Candidate Key is minimal, meaning no smaller part (proper subset) of it can uniquely identify a row on its own.
+
+### Question 6: Can we define more than one Primary Key in a single table?
+*   **Options**:
+    *   a. True
+    *   b. False
+*   **Correct Answer**: **b. False**.
+*   **Explanation & Example**:
+    *   A table can have multiple Candidate Keys (e.g., `Student_ID` and `Social_Security_Number`), but the Database Administrator chooses only ONE Primary Key per table to serve as the main unique identifier.
+
+### Question 7: Which key is used to make a relationship between two tables?
+*   **Options**:
+    *   a. Super Key
+    *   b. Candidate Key
+    *   c. Primary Key
+    *   d. Foreign Key
+*   **Correct Answer**: **d. Foreign Key**.
+*   **Explanation & Example**:
+    *   A Foreign Key in a child table points to the Primary Key of a parent table.
+    *   *Parent Table (Department)*: Has `Dept_ID` (10, 20, 30) as its Primary Key.
+    *   *Child Table (Employee)*: Contains `Dept_ID` as a Foreign Key. This ensures an employee can only belong to a department that actually exists in the Department table.
+
+---
+
+## Lecture 21: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 21: Logical Data Independence
+## Lecture 22: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 22: Schema Mappings
+## Lecture 23: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -812,13 +898,13 @@ A **Foreign Key** is used to create a link between two different tables. It is a
 
 ---
 
-## Lecture 23: Database Architectures Overview
+## Lecture 24: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 24: 2-Tier Architecture
+## Lecture 25: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -835,7 +921,7 @@ graph LR
 
 
 
-## Lecture 25: Classification of DBMS
+## Lecture 26: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
