@@ -447,7 +447,59 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 ---
 
-## Lecture 12: Database Languages (DDL, DML, DCL, TCL)
+## Lecture 12: Transaction Manager & Query Processor
+
+### 1. Transaction Manager
+A transaction is a logical function made up of a collection of operations (e.g., a fund transfer between accounts where funds are read, debited from account A, credited to account B, and updated).
+*   **Atomicity Property**: Enforces the "all-or-nothing" rule. Either all operations within a transaction execute successfully, or none of them are reflected in the database.
+*   **Durability Property**: Ensures persistence—once a transaction successfully completes, the changes must remain permanently stored on disk even if a system (hardware or software) failure occurs.
+*   **Recovery Manager**: If a system failure occurs during execution, the Recovery Manager restores the database back to its last consistent state prior to the failure.
+*   **Concurrency Control Manager**: Manages multiple users accessing the database simultaneously, ensuring concurrent operations execute without conflicts or causing inconsistency.
+
+### 2. Query Processor
+The Query Processor processes user queries coming from different types of users (Naive users, Application Programmers, Sophisticated Users, DBAs) and consists of three main components:
+*   **DDL Interpreter**:
+    *   Interprets Data Definition Language (DDL) statements written by Database Administrators (DBAs).
+    *   Records schema definitions and table structures into the Data Dictionary.
+*   **DML Compiler & Organizer**:
+    *   Translates Data Manipulation Language (DML) statements (e.g., SELECT, INSERT, UPDATE, DELETE) into low-level instructions called Query Evaluation Plans.
+    *   Performs Query Optimization by evaluating multiple candidate execution plans and choosing the plan with the lowest computational/execution cost.
+*   **Query Evaluation Engine**:
+    *   Executes the low-level instructions specified by the chosen evaluation plan to perform operations on the underlying database.
+
+---
+
+## Lecture 13: Evolution of Databases (History of DBMS)
+
+### 1. Introduction to DBMS History
+*   **Data Automation**: Information processing and data automation are the backbones of computer growth.
+*   **Data to Information**: To convert raw data into meaningful information, systems must effectively store and process it.
+
+### 2. Evolution Timeline Across Decades
+*   **1950s & Early 1960s: Magnetic Tapes**:
+    *   *Primary Storage*: Data was stored on magnetic tapes.
+    *   *Use Case Example*: Payroll processing automation.
+    *   *Limitations*: Magnetic tapes only supported sequential data access (direct access was impossible). Data size was often larger than the primary memory size. Merging data across tapes added high system complexity.
+*   **Late 1960s & 1970s: Hard Disk Drives & Relational Model**:
+    *   *Hard Disk Drives (HDDs)*: Allowed direct / random data access, freeing systems from the limitations of sequential tape access.
+    *   *Birth of the Relational Model*: Edgar F. Codd defined the Relational Model and non-procedural query methods. Introduced Data Abstraction, which hides complex implementation details from programmers. E. F. Codd received the prestigious ACM Turing Award for this innovation.
+*   **1980s: Commercialization & Alternatives**:
+    *   Commercial database systems began adopting relational databases on a large scale.
+    *   *Replaced Older Models*: Relational databases replaced Network and Hierarchical models, which were heavily dependent on underlying hardware/implementation details.
+    *   *Research Areas*: Research began in areas like parallel databases, distributed databases, and object-oriented databases.
+*   **1990s: SQL, Internet, and High Availability**:
+    *   *SQL (Structured Query Language)*: Primarily used for decision support systems.
+    *   *Database Upgrades*: Vendors introduced parallel databases and object-relational support.
+    *   *Web & Internet Boom*: Databases evolved to handle high transaction processing rates with 24/7 availability and zero-downtime requirements for maintenance.
+*   **2000s & Beyond: XML, Big Data, and Mobile Databases**:
+    *   *XML & XQuery*: Introduced for flexible data exchange and complex data types.
+    *   *Automated Management*: Auto-administrative database capabilities were introduced.
+    *   *Large-Scale Web Infrastructure*: Distributed data storage systems were developed to handle massive data loads for web giants like Google, Amazon, Facebook, Yahoo, and Microsoft.
+    *   *Modern Databases*: Modern database systems now extend to mobile databases and cloud platforms.
+
+---
+
+## Lecture 14: Database Languages (DDL, DML, DCL, TCL)
 *   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
     *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
 *   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
@@ -460,19 +512,19 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 
 
-## Lecture 13: Physical Data Independence
+## Lecture 15: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 14: Logical Data Independence
+## Lecture 16: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 15: Schema Mappings
+## Lecture 17: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -480,13 +532,13 @@ In addition to core structural responsibilities, the DBA manages day-to-day data
 
 ---
 
-## Lecture 16: Database Architectures Overview
+## Lecture 18: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 17: 2-Tier Architecture
+## Lecture 19: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -503,7 +555,7 @@ graph LR
 
 
 
-## Lecture 18: Classification of DBMS
+## Lecture 20: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
