@@ -665,19 +665,64 @@ Dr. Edgar F. Codd defined 13 rules (numbered 0 to 12) to evaluate whether a data
 
 ---
 
-## Lecture 18: Physical Data Independence
+## Lecture 18: Database Schema and Instance
+
+### 1. Key Objective
+The primary focus of this section is to explain what a Database Schema is and to clarify the crucial distinction between a Database Schema and a Relation Schema, as well as the difference between a Schema and an Instance.
+
+### 2. Recap of Relational Concepts
+*   **Database & Tables**: A relational database is a collection of tables (relations) storing data and relationships.
+*   **Terminology**:
+    *   Rows = Tuples
+    *   Columns = Attributes
+    *   Domain: The set of allowed values for an attribute.
+
+### 3. Database Schema vs. Database Instance
+*   **Database Schema**: The logical design of the overall database. It acts as the structural blueprint before any physical data is added.
+*   **Database Instance**: A snapshot of the entire database (data across all tables) at a given point in time. Because data is added, updated, or deleted, the instance changes continuously while the schema remains fixed.
+
+### 4. Relation Schema vs. Relation Instance
+*   **Relation Schema**: The logical structure of a single table (its name and attributes).
+    *   *Analogy*: Like declaring a variable type in programming (e.g., `int x;`), which is fixed.
+*   **Relation Instance**: The actual data stored in that specific table at a given moment.
+    *   *Analogy*: Like the current value assigned to variable `x`, which changes over time.
+
+### 5. Relation Examples & Attribute Connections
+Relation schemas are demonstrated using the following example tables:
+*   **Department Schema**: `Department(dept_name, building, budget)`
+*   **Instructor Schema**: `Instructor(ID, name, dept_name, salary)`
+*   **Course Schema**: `Course(course_id, title, dept_name, credits)`
+*   **Prereq Schema**: `Prereq(course_id, prereq_id)`
+*   *Relationships*: Tables are interconnected via common attributes (e.g., `dept_name` present in both `Department` and `Instructor`).
+
+### 6. Complete University Database Schema Example
+A complete Database Schema is a collection of relation schemas. Below is a real-world University Database containing the following entities:
+*   `Instructor`: `(ID, name, dept_name, salary)`
+*   `Course`: `(course_id, title, dept_name, credits)`
+*   `Department`: `(dept_name, building, budget)`
+*   `Section`: Maintains section details for offered courses.
+*   `Teaches`: `(ID, course_id, sec_id, semester, year)` — connects instructors to taught courses.
+*   `Student`: `(ID, name, dept_name, tot_cred)`
+*   `Advisor`: `(s_ID, i_ID)` — links students with their faculty advisors.
+*   `Takes`: Links students to the courses they enroll in.
+*   `Classroom`: `(building, room_number, capacity)`
+*   `Time_Slot`: `(time_slot_id, day, start_time, end_time)`
+
+---
+
+## Lecture 19: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 19: Logical Data Independence
+## Lecture 20: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 20: Schema Mappings
+## Lecture 21: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -685,13 +730,13 @@ Dr. Edgar F. Codd defined 13 rules (numbered 0 to 12) to evaluate whether a data
 
 ---
 
-## Lecture 21: Database Architectures Overview
+## Lecture 22: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 22: 2-Tier Architecture
+## Lecture 23: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -708,7 +753,7 @@ graph LR
 
 
 
-## Lecture 23: Classification of DBMS
+## Lecture 24: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
