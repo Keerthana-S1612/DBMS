@@ -645,19 +645,39 @@ Relations can be used to link multiple tables together:
 
 ---
 
-## Lecture 17: Physical Data Independence
+## Lecture 17: Codd's 12 Rules for RDBMS
+
+### 1. Overview of the 13 Rules
+Dr. Edgar F. Codd defined 13 rules (numbered 0 to 12) to evaluate whether a database management system can be classified as a true Relational Database Management System (RDBMS):
+*   **Rule 0: The Foundation Rule**: Any system claimed to be an RDBMS must be able to manage its databases entirely through its relational capabilities.
+*   **Rule 1: The Information Rule**: All data in an RDBMS must be represented explicitly at the logical level in exactly one way—by values in table rows and columns.
+*   **Rule 2: Guaranteed Access Rule**: Every individual piece of data (atomic value) must be logically accessible by specifying a combination of the Table Name, Primary Key, and Column Name.
+*   **Rule 3: Systematic Treatment of Null Values**: Null values (representing missing or non-applicable information) must be handled systematically, independent of the data type. They are distinct from zero or blank spaces.
+*   **Rule 4: Dynamic Online Catalog Based on the Relational Model**: The database description/metadata must be stored at the logical level just like regular data, allowing authorized users to access it using the database query language.
+*   **Rule 5: Comprehensive Data Sublanguage Rule**: A relational system may support multiple languages, but it must support at least one language (like SQL) that covers Data Definition (DDL), Data Manipulation (DML), View Definition, Integrity Constraints, Authorization, and Transaction Management.
+*   **Rule 6: View Updating Rule**: All views that are theoretically updatable must also be updatable by the system. Updating data through a view must reflect directly in the base table.
+*   **Rule 7: High-Level Insert, Update, and Delete**: The system must support high-level set operations, meaning insert, update, and delete operations can be applied to entire sets of records (multiple rows) at once, not just a single record at a time.
+*   **Rule 8: Physical Data Independence**: Application programs and terminal activities remain logically unaffected whenever changes are made to physical storage representations or access methods.
+*   **Rule 9: Logical Data Independence**: Changes made to the base tables (like adding columns) should not affect application programs or user queries as long as the logical view remains unchanged.
+*   **Rule 10: Integrity Independence**: Data integrity constraints (such as primary key or check constraints) must be defined and stored within the database catalog itself, rather than inside application programs.
+*   **Rule 11: Distribution Independence**: The database must function smoothly even if the data is distributed across multiple physical sites/servers. Users should feel as though the data is stored in a single central location.
+*   **Rule 12: Non-Subversion Rule**: If the RDBMS provides a low-level (record-at-a-time) interface, that interface cannot be used to bypass or subvert the integrity rules or security constraints enforced by the higher-level relational language.
+
+---
+
+## Lecture 18: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 18: Logical Data Independence
+## Lecture 19: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 19: Schema Mappings
+## Lecture 20: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -665,13 +685,13 @@ Relations can be used to link multiple tables together:
 
 ---
 
-## Lecture 20: Database Architectures Overview
+## Lecture 21: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 21: 2-Tier Architecture
+## Lecture 22: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -688,7 +708,7 @@ graph LR
 
 
 
-## Lecture 22: Classification of DBMS
+## Lecture 23: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
