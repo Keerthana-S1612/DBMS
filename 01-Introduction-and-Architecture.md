@@ -500,13 +500,44 @@ The Query Processor processes user queries coming from different types of users 
 ---
 
 ## Lecture 14: Database Languages (DDL, DML, DCL, TCL)
-*   **DDL (Data Definition Language)**: Used by DBAs and designers to define schemas and constraints. The DDL compiler generates metadata stored in the data dictionary.
-    *   *Commands*: `CREATE`, `ALTER`, `DROP`, `TRUNCATE`.
-*   **DML (Data Manipulation Language)**: Used to query, insert, update, and delete database records.
-    *   *Procedural DML*: User specifies *what* data is needed and *how* to get it (e.g., Relational Algebra).
-    *   *Non-Procedural DML*: User specifies *what* data is needed without describing how to get it (e.g., SQL).
-*   **DCL (Data Control Language)**: Used to configure permissions and authorizations (`GRANT`, `REVOKE`).
-*   **TCL (Transaction Control Language)**: Used to manage transaction execution states (`COMMIT`, `ROLLBACK`, `SAVEPOINT`).
+
+### 1. Introduction to Database Languages
+*   **Definition**: Database languages are specialized languages used to directly interact with a database system.
+*   **SQL Integration**: Although categorized into Data Definition Language (DDL) and Data Manipulation Language (DML), in practice, both are bundled together into a single language package like SQL (Structured Query Language).
+
+### 2. Data Definition Language (DDL)
+DDL is used to define, alter, and manage the schema (structure) of the database, rather than the data inside it.
+*   **Key Commands & Functions**:
+    *   `CREATE`: Defines a new table or schema.
+    *   `ALTER`: Modifies an existing schema (e.g., adding/dropping columns or changing data types).
+    *   `RENAME`: Changes the name of a table.
+    *   `DROP`: Completely deletes a table and its structure from memory.
+    *   `TRUNCATE`: Deletes all rows/data from a table while keeping the table structure intact.
+*   **Integrity & Consistency Constraints**:
+    *   **Domain Constraints**: Restricts data based on column data types (e.g., setting age as integer) or value limits (e.g., account balance $> 0$).
+    *   **Referential Integrity**: Ensures values inserted in one table exist in another linked table.
+    *   **Assertions**: Conditions that the database must always satisfy when standard domain/referential rules aren't sufficient.
+*   **Authorization & Privileges**: Controls user access privileges such as Read, Insert, Update, and Delete permissions.
+*   **Data Dictionary & Metadata**:
+    *   The execution output of DDL statements is stored in a special, system-only table called the Data Dictionary.
+    *   Contains Metadata (data about data), which the DBMS consults before performing data read or update actions.
+
+### 3. Data Manipulation Language (DML)
+DML deals strictly with the actual data items stored inside the tables, without modifying the table structure.
+*   **Core Data Operations**:
+    *   **Retrieval**: Fetching/querying data from tables (also referred to as Queries).
+    *   **Insertion**: Adding new records.
+    *   **Deletion**: Removing existing records.
+    *   **Modification**: Updating existing values.
+*   **Types of DML**:
+    *   **Procedural DML**: Requires specifying *what* data is needed and *how* to retrieve it.
+    *   **Declarative / Non-Procedural DML**: Only requires specifying *what* data is needed, without specifying how to fetch it.
+
+### 4. Database Management Softwares
+Popular database management systems (DBMS) used across the industry include:
+*   **Relational DBMS**: Oracle, MySQL, IBM DB2, Microsoft SQL Server, PostgreSQL, SQLite, Teradata, Informix.
+*   **NoSQL / Key-Value / Search**: MongoDB, Redis, Elasticsearch.
+*   **Cloud / File-Based / Legacy**: Amazon RDS, Microsoft Access, RazerSQL, Altibase, and Improvado.
 
 ---
 
