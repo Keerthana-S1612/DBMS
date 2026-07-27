@@ -543,19 +543,74 @@ Popular database management systems (DBMS) used across the industry include:
 
 
 
-## Lecture 15: Physical Data Independence
+## Lecture 15: Introduction to DBMS - Solved Questions
+
+### 1. Definition of DBMS
+*   **Question**: Which of the following is true about DBMS?
+*   **Options**:
+    *   a. It is a collection of interrelated data.
+    *   b. It is a set of programs to access those data.
+    *   c. It is a software to create and manage databases.
+    *   d. All of the above.
+*   **Answer**: **d. All of the above**. A DBMS consists of interrelated data, contains access programs, and serves as software to create and maintain databases.
+
+### 2. File Systems vs. DBMS
+*   **Question**: Which of the following statement is/are false?
+*   **Key Concept**: Identifying the incorrect statement regarding data storage systems.
+*   **Explanation**: "File systems can handle redundancy well" is **FALSE**. High data redundancy is a major limitation of file systems, which is why DBMS is preferred.
+*   **Answer**: **b. File systems can handle redundancy well**.
+
+### 3. Three-Tier Architecture
+*   **Question**: In a three-tier architecture, which tier deals with business logic and business rules?
+*   **Explanation**:
+    *   *Presentation Tier*: User interface / Front-end.
+    *   *Application Tier*: Handles core business logic and business rules.
+    *   *Data Tier*: Houses the actual databases.
+*   **Answer**: **b. Application Tier**.
+
+### 4. Data Abstraction
+*   **Question**: Hiding the complexity from application programmers and users is referred to as ____?
+*   **Explanation**: Hiding system implementation details while presenting a simplified view to users is defined as Data Abstraction.
+*   **Answer**: **c. Data Abstraction**.
+
+### 5. Database Schemas
+*   **Question**: The overall design of the database is called as ____?
+*   **Explanation**: The structural layout or overall design of a database system is its Schema (categorized into Physical, Logical, and External/Sub-schema).
+*   **Answer**: **a. Schema**.
+
+### 6. Types of Database Users
+*   **Question**: Which type of users are unsophisticated and interact with the system by invoking existing application programs?
+*   **Explanation**: Naive users (e.g., bank tellers, everyday web app users) interact with the database through pre-written application interfaces without needing technical knowledge of the database.
+*   **Answer**: **a. Naive users**.
+
+### 7. Database Administrator (DBA) Responsibilities
+*   **Question**: Which of the following is/are incorrect about DBA?
+*   **Explanation**:
+    *   DBAs grant access permissions.
+    *   DBAs perform periodic database backups.
+    *   DBAs define the database schema, storage structure, and access methods.
+    *   Since all provided options listed valid DBA duties, none are incorrect.
+*   **Answer**: **d. None of the above**.
+
+### 📝 Homework Question
+*   **Prompt**: "If you are a database administrator, list some major steps that you would take in setting up a database for a particular Enterprise."
+*   **Instruction**: Viewers are invited to think through the role of a DBA and design their step-by-step approach.
+
+---
+
+## Lecture 16: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 16: Logical Data Independence
+## Lecture 17: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 17: Schema Mappings
+## Lecture 18: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -563,13 +618,13 @@ Popular database management systems (DBMS) used across the industry include:
 
 ---
 
-## Lecture 18: Database Architectures Overview
+## Lecture 19: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 19: 2-Tier Architecture
+## Lecture 20: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -586,7 +641,7 @@ graph LR
 
 
 
-## Lecture 20: Classification of DBMS
+## Lecture 21: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
