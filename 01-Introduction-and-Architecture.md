@@ -598,19 +598,66 @@ Popular database management systems (DBMS) used across the industry include:
 
 ---
 
-## Lecture 16: Physical Data Independence
+## Lecture 16: Introduction to Relational Databases
+
+### 1. Data Models & Relational Databases
+*   **Data Model**: Represents the underlying structure of a database—describing data, relationships, semantics, and constraints.
+*   **Types**: Types of data models include Relational, Entity-Relationship (ER), Object-Based, and Semi-Structured.
+*   **Relational Implementation**: Relational databases strictly implement the Relational Model.
+
+### 2. Structure of Relational Databases
+*   **Database**: A database is a collection of interrelated tables.
+*   **Table Function**: A table organizes data into rows and columns to represent both the data itself and the relationships among the data.
+*   **Example**: In a student table, a row with Roll No 101 and Name Muhammad Khan demonstrates that Roll No 101 belongs specifically to Muhammad Khan.
+
+### 3. Terminology: DBMS vs. Mathematics
+Relational DB concepts directly correspond to mathematical set theory concepts:
+
+| DBMS Term | Relational Model Term | Mathematical Equivalent |
+| :--- | :--- | :--- |
+| Table | Relation | Relation |
+| Row | Tuple | Element / Tuple |
+| Column | Attribute | Attribute |
+
+*   **Relation Instance**: Represents a specific snapshot or set of rows in a relation at a given moment in time.
+
+### 4. Key Core Concepts
+1.  **Domain & Atomic Domains**:
+    *   **Domain**: The set of permitted values allowed for a given attribute (e.g., a bank table having only 5 specific branch names permitted).
+    *   **Atomic Domain**: A domain is atomic if its elements are considered indivisible.
+        *   *Atomic Example*: A phone number treated as a single, indivisible string.
+        *   *Non-Atomic Example*: A phone number split into country code, area code, and local number.
+2.  **Null Values**:
+    *   Null does *not* mean zero (0), empty string, or blank spaces.
+    *   A Null Value is a special marker representing a value that is either unknown or does not exist (e.g., a student without a recorded phone number).
+3.  **Sorting in Relations**:
+    *   Tuples in a relation are inherently unsorted in physical storage.
+    *   Even if data appears ordered in examples (like sorted course IDs), newly inserted rows are simply appended rather than sorted automatically. (Data can be sorted dynamically during querying/display).
+
+### 5. Relationships Between Relations
+Relations can be used to link multiple tables together:
+*   **Instructor Relation**: Attributes = Instructor ID, Name, Department, Salary.
+*   **Student Relation**: Attributes = Student ID, Name, Department, Total Credits.
+*   **Advisor Relation**: Serves as a linking table with attributes Student ID and Instructor ID, connecting student 103 to advisor 25252.
+
+### 📝 Homework Question
+*   **Task**: Examine a given Course Relation (Course ID, Title, Department Name, Credits) and determine how to establish a relationship connecting it with the Student Relation or Instructor Relation.
+
+---
+
+## Lecture 17: Physical Data Independence
 *   **Concept**: The ability to modify the physical/internal schema without affecting the conceptual schema or the external applications.
 *   **Usage**: If we move the database to a new hard drive, change index structures (e.g., from B+ Tree to Hash index), or partition a file, the logical tables remain unchanged. The application code executing queries continues to work without modification.
 
 ---
 
-## Lecture 17: Logical Data Independence
+## Lecture 18: Logical Data Independence
 *   **Concept**: The ability to modify the conceptual schema (logical table structures, constraints) without changing the external schemas or application programs.
 *   **Usage**: If we split an existing table into two or add a new attribute to a relation, we can define a view that reconstructs the old table structure. This ensures that old application programs referencing the table do not break.
 
 ---
 
-## Lecture 18: Schema Mappings
+## Lecture 19: Schema Mappings
 *   **Concept**: The process of transforming requests and results between different levels of the three-schema architecture.
 *   **Conceptual-to-Internal Mapping**: Translates conceptual queries (e.g., `SELECT * FROM student`) into internal disk block operations and index searches.
 *   **External-to-Conceptual Mapping**: Translates user-view queries on virtual views into queries on the actual logical tables.
@@ -618,13 +665,13 @@ Popular database management systems (DBMS) used across the industry include:
 
 ---
 
-## Lecture 19: Database Architectures Overview
+## Lecture 20: Database Architectures Overview
 *   **Centralized DBMS Architecture**: All database software, data storage, and processing client programs run on a single machine (e.g., a mainframe server). Easy to manage but creates performance bottlenecks.
 *   **Client-Server DBMS Architecture**: Workloads are distributed between the client machine (runs user interface and local application logic) and the database server machine (handles query optimization, transactional safety, and disk storage).
 
 ---
 
-## Lecture 20: 2-Tier Architecture
+## Lecture 21: 2-Tier Architecture
 *   **Concept**: The client application runs directly on the user's machine and communicates directly with the database server using network connection protocols (e.g., JDBC or ODBC).
 
 ```mermaid
@@ -641,7 +688,7 @@ graph LR
 
 
 
-## Lecture 21: Classification of DBMS
+## Lecture 22: Classification of DBMS
 DBMS systems can be categorized based on their underlying data model:
 1.  **Relational DBMS (RDBMS)**: Organizes data as a collection of two-dimensional tables (relations) with rows and columns. (e.g., PostgreSQL, MySQL, Oracle).
 2.  **Object-Oriented DBMS (OODBMS)**: Stores data in the form of objects, matching Object-Oriented Programming (OOP) languages (e.g., db4o, ObjectDB).
